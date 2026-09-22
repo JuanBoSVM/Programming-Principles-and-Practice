@@ -5,6 +5,9 @@
 #include <vector>
 #include <functional>
 
+#include "Chapter1.h"
+#include "Utilities.h"
+
 using std::print;
 using std::println;
 using std::cin;
@@ -13,28 +16,13 @@ using std::string_view;
 using std::function;
 using std::format;
 
-void PrintHeader(string_view header)
-{
-	// Calculate the length of the header plus two for the border dashes
-	const size_t headerLength = header.size() + 2u;
-
-	// Print the header with a border of dashes
-	println("{:->{}}", "", headerLength);
-	println("{:^{}}", header, headerLength);
-	println("{:->{}}", "", headerLength);
-
-	// Print two blank lines after the header
-	println();
-	println();
-}
-
-void Exercise1()
+void BookExercises::Chapter1::Exercise1()
 {
 	println("Hello, programming!");
 	println("Here we go!");
 }
 
-void Exercise2()
+void BookExercises::Chapter1::Exercise2()
 {
 	// Store the instructions for Exercise 2 in a vector of string_views
 	const vector<string_view> instructions =
@@ -86,7 +74,7 @@ void Exercise2()
 	println("");
 }
 
-void Exercise3()
+void BookExercises::Chapter1::Exercise3()
 {
 	// Store the instructions for Exercise 3 in a vector of string_views
 	const vector<string_view> instructions =
@@ -121,7 +109,7 @@ void Exercise3()
 	println("");
 }
 
-void Exercise4()
+void BookExercises::Chapter1::Exercise4()
 {
 	// Store the instructions for baking blueberry muffins in a vector of string_views
 	const vector<string_view> instructions =
@@ -195,7 +183,7 @@ void Exercise4()
 	println("");
 }
 
-void Exercise5()
+void BookExercises::Chapter1::Exercise5()
 {
 	// Store the concepts in a vector of string_views
 	const vector<string_view> concepts =
@@ -270,30 +258,18 @@ void Exercise5()
 	}
 }
 
-int main()
+void BookExercises::Chapter1::WholeChapter()
 {
 	// Store a pointer to the functions in a vector
 	const vector<function<void()>> exercises =
 	{
-		Exercise1,
-		Exercise2,
-		Exercise3,
-		Exercise4,
-		Exercise5
+		BookExercises::Chapter1::Exercise1,
+		BookExercises::Chapter1::Exercise2,
+		BookExercises::Chapter1::Exercise3,
+		BookExercises::Chapter1::Exercise4,
+		BookExercises::Chapter1::Exercise5
 	};
 
 	// Loop through the vector and call each function
-	for (size_t i { 0u }; i < exercises.size(); ++i)
-	{
-		// Print the header for the current exercise
-		PrintHeader(format("Exercise {}", i + 1u));
-
-		// Call the current exercise function
-		exercises[i]();
-
-		// Print a blank line after the exercise output
-		println();
-	}
-
-	return 0;
+	CallFunctionsWithHeader("Exercise", exercises);
 }
