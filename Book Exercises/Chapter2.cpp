@@ -3,10 +3,12 @@
 #include <print>
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <functional>
 #include <format>
 #include <algorithm>
+#include <cmath>
 
 #include "Utilities.h"
 
@@ -18,7 +20,124 @@ using std::transform;
 using std::print;
 using std::println;
 
-void BookExercises::Chapter2::TryThis0(double input)
+void BookExercises::Chapter2::TryThis1()
+{
+	// Simulate user input for the exercise
+	const string name { "Juan" };
+	constexpr double age { 29.5 };
+
+	// Print the user input values
+	println("The user input values are: {} and {}", name, age);
+	println();
+
+	// Display the output
+	println("Hi, {}! You are {} months old!", name, age * 12.0);
+}
+
+void BookExercises::Chapter2::TryThis2()
+{
+	// Simulate user input for the exercise
+	constexpr int number { 7 };
+
+	// Print the user input value
+	println("The user input value is: {}", number);
+	println();
+
+	// Display the output
+	println("Number: {}", number);
+	println("Number plus one: {}", number + 1);
+	println("Twice the number: {}", 2 * number);
+	println("Number squared: {}", number * number);
+	println("Half the number: {}", number / 2);
+	println("Square root of the number: {}", sqrt(number));
+	println("Reminder of the number divided by 2: {}", number % 2);
+}
+
+void BookExercises::Chapter2::TryThis3()
+{
+	// Simulate user input for the exercise
+	string input { "The cat cat jumped" };
+	std::istringstream iss(input);
+
+	// Print the user input value
+	println("The user input value is: \"{}\"", input);
+
+	// Store the previous and current words for comparison
+	string previous;
+	string current;
+
+	// Read words from the input stream and check for repetitions
+	while (iss >> current)
+	{
+		// check if the word is the same as last
+		if (previous == current)
+		{
+			println("Repeated word: \"{}\"", current);
+		}
+
+		// Update the previous word for the next iteration
+		previous = current;
+	}
+}
+
+void BookExercises::Chapter2::TryThis4()
+{
+	// Simulate user input for the exercise
+	string input { "She she laughed \"he he he!\" because what he did did not look very very good good" };
+	std::istringstream iss(input);
+
+	// Print the user input value
+	println("The user input value is: \"{}\"", input);
+
+	// Store the previous and current words for comparison
+	string previous;
+	string current;
+
+	// Read words from the input stream and check for repetitions
+	while (iss >> current)
+	{
+		// check if the word is the same as last
+		if (previous == current)
+		{
+			println("Repeated word: \"{}\"", current);
+		}
+
+		// Update the previous word for the next iteration
+		previous = current;
+	}
+}
+
+void BookExercises::Chapter2::TryThis5()
+{
+	// Store the invalid strings
+	string variable { "STRING s = \"Goodbye, cruel world! \"" };
+	string command { "cOut << S << '\\n';" };
+
+	// Print the invalid strings and explain why they are invalid
+	println("The following string is invalid because \"STRING\" should be \"string\":");
+	println("{}", variable);
+	println();
+
+	println("The following string is invalid because \"cOut\" should be \"cout\":");
+	println("{}", command);
+}
+
+void BookExercises::Chapter2::Trythis6()
+{
+	// Vector of function pointers to the TryThis6_x functions
+	vector<function<void()>> tryThis6Functions = {
+		TryThis6_1,
+		TryThis6_2,
+		TryThis6_3,
+		TryThis6_4,
+		TryThis6_5
+	};
+
+	// Call each function in the vector
+	CallFunctionsWithHeader("Try This 6 -", tryThis6Functions);
+}
+
+void BookExercises::Chapter2::TryThis6_0(double input)
 {
 	using std::cout;
 	using std::cin;
@@ -34,81 +153,81 @@ void BookExercises::Chapter2::TryThis0(double input)
 		<< endl;
 }
 
-void BookExercises::Chapter2::TryThis1()
+void BookExercises::Chapter2::TryThis6_1()
 {
 	// User input 1
 	println("User input 1:");
-	TryThis0(1);
+	TryThis6_0(1);
 
 	// Separator
 	println();
 
 	// User input 2
 	println("User input 2:");
-	TryThis0(2);
+	TryThis6_0(2);
 }
 
-void BookExercises::Chapter2::TryThis2()
+void BookExercises::Chapter2::TryThis6_2()
 {
 	// User input 128
 	println("User input 128:");
-	TryThis0(128);
+	TryThis6_0(128);
 
 	// Separator
 	println();
 
 	// User input 1001
 	println("User input 1001:");
-	TryThis0(1001);
+	TryThis6_0(1001);
 }
 
-void BookExercises::Chapter2::TryThis3()
+void BookExercises::Chapter2::TryThis6_3()
 {
 	// User input -1
 	println("User input -1:");
-	TryThis0(-1);
+	TryThis6_0(-1);
 
 	// Separator
 	println();
 
 	// User input -2
 	println("User input -2:");
-	TryThis0(-2);
+	TryThis6_0(-2);
 }
 
-void BookExercises::Chapter2::TryThis4()
+void BookExercises::Chapter2::TryThis6_4()
 {
 	// User input 56
 	println("User input 56:");
-	TryThis0(56);
+	TryThis6_0(56);
 
 	// Separator
 	println();
 
 	// User input 89
 	println("User input 89:");
-	TryThis0(89);
+	TryThis6_0(89);
 
 	// Separator
 	println();
 
 	// User input 128
 	println("User input 128:");
-	TryThis0(128);
+	TryThis6_0(128);
 }
 
-void BookExercises::Chapter2::TryThis5()
+void BookExercises::Chapter2::TryThis6_5()
 {
 	// User input 56.9
 	println("User input 56.9:");
-	TryThis0(56.9);
+	TryThis6_0(56.9);
 
 	// Separator
 	println();
 
 	// User input 56.2
 	println("User input 56.2:");
-	TryThis0(56.2);
+	TryThis6_0(56.2);
 }
 
 void BookExercises::Chapter2::Exercise1()
@@ -119,7 +238,8 @@ void BookExercises::Chapter2::Exercise1()
 		TryThis2,
 		TryThis3,
 		TryThis4,
-		TryThis5
+		TryThis5,
+		Trythis6
 	};
 
 	// Call each function in the vector

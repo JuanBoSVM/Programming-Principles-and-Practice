@@ -151,13 +151,16 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BookChapters.h" />
     <ClInclude Include="Chapter1.h" />
     <ClInclude Include="Chapter2.h" />
+    <ClInclude Include="Chapter3.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chapter1.cpp" />
     <ClCompile Include="Chapter2.cpp" />
+    <ClCompile Include="Chapter3.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>

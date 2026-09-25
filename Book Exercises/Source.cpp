@@ -5,8 +5,7 @@
 #include <print>
 
 #include "Utilities.h"
-#include "Chapter1.h"
-#include "Chapter2.h"
+#include "BookChapters.h"
 
 using std::vector;
 using std::function;
@@ -24,7 +23,8 @@ int main()
 	const vector<function<void()>> chapters =
 	{
 		BookExercises::Chapter1::WholeChapter,
-		BookExercises::Chapter2::WholeChapter
+		BookExercises::Chapter2::WholeChapter,
+		BookExercises::Chapter3::WholeChapter
 	};
 
 	// Print the header for the book exercises

@@ -1,20 +1,13 @@
 #pragma once
 
-namespace BookExercises::Chapter2
+namespace BookExercises::Chapter3
 {
 	void TryThis1();
 	void TryThis2();
 	void TryThis3();
 	void TryThis4();
 	void TryThis5();
-	void Trythis6();
-
-	void TryThis6_0(double input);
-	void TryThis6_1();
-	void TryThis6_2();
-	void TryThis6_3();
-	void TryThis6_4();
-	void TryThis6_5();
+	void TryThis6();
 
 	void Exercise1();
 	void Exercise2();
