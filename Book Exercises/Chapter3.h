@@ -20,6 +20,15 @@ namespace BookExercises::Chapter3
 	void Exercise9();
 	void Exercise10();
 	void Exercise11();
+	void Exercise12();
+	void Exercise13();
+	void Exercise14();
+	void Exercise15();
+	void Exercise16();
+	void Exercise17();
+	void Exercise18();
+	void Exercise19();
+	void Exercise20();
 
 	void WholeChapter();
 }

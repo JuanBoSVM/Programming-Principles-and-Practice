@@ -13,6 +13,7 @@
 #include "Utilities.h"
 
 using std::string;
+using std::istringstream;
 using std::vector;
 using std::function;
 using std::format;
@@ -57,7 +58,7 @@ void BookExercises::Chapter2::TryThis3()
 {
 	// Simulate user input for the exercise
 	string input { "The cat cat jumped" };
-	std::istringstream iss(input);
+	istringstream iss(input);
 
 	// Print the user input value
 	println("The user input value is: \"{}\"", input);
