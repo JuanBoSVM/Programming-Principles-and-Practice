@@ -6,6 +6,8 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
+#include <cmath>
+#include <limits>
 
 #include "Utilities.h"
 
@@ -16,6 +18,9 @@ using std::println;
 using std::print;
 using std::sort;
 using std::function;
+using std::numeric_limits;
+using std::ceil;
+using std::log2;
 
 void BookExercises::Chapter3::TryThis1()
 {
@@ -201,6 +206,9 @@ void BookExercises::Chapter3::TryThis6()
 	// Read the input stream word by word
 	while (iss >> currentWord)
 	{
+		// Convert the word to lowercase for case-insensitive comparison
+		StringToLower(currentWord);
+
 		// Check if the word is in the banned words list
 		for (const auto& bannedWord : bannedWords)
 		{
@@ -465,61 +473,355 @@ void BookExercises::Chapter3::Exercise6()
 
 void BookExercises::Chapter3::Exercise7()
 {
+	// Simulate user input
+	string input { "Three" };
 
+	// Vector with the spelled-out numbers
+	const vector<string> spelledOutNumbers
+	{
+		"zero",
+		"one",
+		"two",
+		"three",
+		"four",
+		"five",
+		"six",
+		"seven",
+		"eight",
+		"nine"
+	};
+
+	// Print the user input
+	println("The user input is: {}", input);
+
+	// Convert the input to lowercase for case-insensitive comparison
+	StringToLower(input);
+
+	// Loop through the spelled-out numbers to find a match
+	for (unsigned int i { 0u }; i < spelledOutNumbers.size(); ++i)
+	{
+		// Skip non-matching numbers
+		if (input != spelledOutNumbers[i]) { continue; }
+
+		// Print the corresponding digit if a match is found
+		println("The number is: {}", i);
+
+		// Exit the loop after finding a match
+		break;
+	}
 }
 
 void BookExercises::Chapter3::Exercise8()
 {
+	// Simulate user input
+	const string input { "Three 4 +" };
+	istringstream iss { input };
 
+	// Vector with the spelled-out numbers
+	const vector<string> spelledOutNumbers
+	{
+		"zero",
+		"one",
+		"two",
+		"three",
+		"four",
+		"five",
+		"six",
+		"seven",
+		"eight",
+		"nine"
+	};
+
+	// Variables to store the operands and operator
+	string operand1Str;
+	string	operand2Str;
+	int operand1Num { 0 };
+	int operand2Num { 0 };
+	char operatorChar { ' ' };
+
+	// Print the user input
+	println("The user input is: {}", input);
+
+	// Extract the operands and operator from the input
+	iss >> operand1Str >> operand2Str >> operatorChar;
+
+	// Convert the first number to digits
+	if (operand1Str.length() > 1)
+	{
+		StringToLower(operand1Str);
+
+		for (unsigned int i { 0u }; i < spelledOutNumbers.size(); ++i)
+		{
+			if (operand1Str == spelledOutNumbers[i])
+			{
+				operand1Num = static_cast<int>(i);
+				break;
+			}
+		}
+	}
+
+	else { operand1Num = std::stoi(operand1Str); }
+
+	// Convert the second number to digits
+	if (operand2Str.length() > 1)
+	{
+		StringToLower(operand2Str);
+		for (unsigned int i { 0u }; i < spelledOutNumbers.size(); ++i)
+		{
+			if (operand2Str == spelledOutNumbers[i])
+			{
+				operand2Num = static_cast<int>(i);
+				break;
+			}
+		}
+	}
+
+	else { operand2Num = std::stoi(operand2Str); }
+
+	// Perform the calculation based on the operator
+	switch (operatorChar)
+	{
+	case '+':
+
+		println("The sum of {} + {} is: {}", operand1Num, operand2Num, operand1Num + operand2Num);
+		break;
+
+	case '-':
+
+		println("The difference of {} - {} is: {}", operand1Num, operand2Num, operand1Num - operand2Num);
+		break;
+
+	case '*':
+
+		println("The product of {} * {} is: {}", operand1Num, operand2Num, operand1Num * operand2Num);
+		break;
+
+	case '/':
+
+		if (operand2Num != 0.0)
+		{
+			println("The quotient of {} / {} is: {}", operand1Num, operand2Num, operand1Num / operand2Num);
+		}
+
+		else
+		{
+			println("Error: Division by zero is not allowed.");
+		}
+		break;
+
+	default:
+		println("Invalid operator.");
+		break;
+	}
 }
 
 void BookExercises::Chapter3::Exercise9()
 {
+	// Target numbers to calculate the necessary number of squares
+	const vector<unsigned int> targetNumbers
+	{
+		1000u,
+		1000000u,
+		1000000000u
+	};
 
+	// Loop through the target numbers
+	for (const auto& target : targetNumbers)
+	{
+		// Print the target number with the necessary number of squares
+		println
+		(
+			"You will need {} squares to gain {} grain{} of rice",
+			static_cast<unsigned int>(ceil(log2(static_cast<double>(target)))),
+			target,
+			target == 1 ? " " : "s"
+		);
+	}
 }
 
 void BookExercises::Chapter3::Exercise10()
 {
+	// Store the maximum values for int and double types
+	constexpr int maxInt { numeric_limits<int>::max() };
+	constexpr double maxDouble { numeric_limits<double>::max() };
+
+	// Print the maximum values
+	println
+	(
+		"The maximum value for int is: {}, which we would need {} squares for",
+		maxInt,
+		static_cast<unsigned int>(ceil(log2(maxInt)))
+	);
+
+	println
+	(
+		"The maximum value for double is: {}, which we would need {} squares for",
+		maxDouble,
+		static_cast<unsigned int>(ceil(log2(maxDouble)))
+	);
 }
 
 void BookExercises::Chapter3::Exercise11()
 {
+	// Vector with the "random" sequences of rocks, scissors, and paper
+	const vector<vector<char>> sequences
+	{
+		{ 'r', 's', 'p', 'r', 's', 'p' },
+		{ 'r', 'r', 's', 's', 'p', 'p' },
+		{ 'r', 's', 'r', 's', 'p', 'p' }
+	};
+
+	// Simulate user input for the sequences
+	const vector<char> userInputs
+	{
+		'r',
+		'p',
+		'p',
+		's',
+		'r',
+		's'
+	};
+
+	// String to represent the machine's choice and the user's choice
+	string machineChoice;
+	string userChoice;
+
+	// Flag to indicate if the user has won
+	bool userWon { false };
+
+	// Loop through the sequences and print the results
+	for (size_t i { 0u }; i < sequences.size(); ++i)
+	{
+		// Print the simulation header
+		println("Simulating the sequence: {}", i + 1u);
+		println();
+
+		// Loop through the sequence and print the results
+		for (size_t j { 0u }; j < sequences[i].size(); ++j)
+		{
+			// Determine the machine's choice based on the character
+			switch (sequences[i][j])
+			{
+			case 'r':
+				machineChoice = "Rock";
+				break;
+
+			case 's':
+				machineChoice = "Scissors";
+				break;
+
+			case 'p':
+				machineChoice = "Paper";
+				break;
+
+			default:
+				machineChoice = "Unknown";
+				break;
+			}
+
+			// Determine the user's choice based on the character
+			switch (userInputs[j])
+			{
+			case 'r':
+				userChoice = "Rock";
+				break;
+
+			case 's':
+				userChoice = "Scissors";
+				break;
+
+			case 'p':
+				userChoice = "Paper";
+				break;
+
+			default:
+				userChoice = "Unknown";
+				break;
+			}
+
+			// Print the user's input and the machine's choice
+			println
+			(
+				"The user input is: {} and the machine's choice is: {}",
+				userChoice,
+				machineChoice
+			);
+
+			// Determine the winner based on the user's input and the machine's choice
+			switch (userChoice[0])
+			{
+			case 'r':
+				if (sequences[i][j] == 's') { userWon = true; }
+				else { userWon = false; }
+				break;
+
+			case 'p':
+				if (sequences[i][j] == 'r') { userWon = true; }
+				else { userWon = false; }
+				break;
+
+			case 's':
+				if (sequences[i][j] == 'p') { userWon = true; }
+				else { userWon = false; }
+				break;
+			}
+
+			// Print the result of the game
+			if (userChoice == machineChoice) { println("It's a tie!"); }
+			else { println("The {} is the winner!", userWon ? "user" : "machine"); }
+
+			// Print a newline for better readability
+			println();
+		}
+
+		// Print a newline after each sequence
+		println();
+	}
 }
 
 void BookExercises::Chapter3::Exercise12()
 {
+
 }
 
 void BookExercises::Chapter3::Exercise13()
 {
+
 }
 
 void BookExercises::Chapter3::Exercise14()
 {
+
 }
 
 void BookExercises::Chapter3::Exercise15()
 {
+
 }
 
 void BookExercises::Chapter3::Exercise16()
 {
+
 }
 
 void BookExercises::Chapter3::Exercise17()
 {
+
 }
 
 void BookExercises::Chapter3::Exercise18()
 {
+
 }
 
 void BookExercises::Chapter3::Exercise19()
 {
+
 }
 
 void BookExercises::Chapter3::Exercise20()
 {
+
 }
 
 void BookExercises::Chapter3::WholeChapter()
