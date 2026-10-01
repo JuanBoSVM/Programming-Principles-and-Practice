@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <print>
 #include <vector>
 #include <algorithm>
@@ -11,8 +12,11 @@
 
 #include "Utilities.h"
 
+using std::count;
+using std::erase;
 using std::vector;
 using std::string;
+using std::string_view;
 using std::istringstream;
 using std::println;
 using std::print;
@@ -184,7 +188,7 @@ void BookExercises::Chapter3::TryThis6()
 	istringstream iss { input };
 
 	// Define a vector of banned words
-	const vector<string> bannedWords
+	const vector<string_view> bannedWords
 	{
 		"Broccoli",
 		"broccoli",
@@ -477,7 +481,7 @@ void BookExercises::Chapter3::Exercise7()
 	string input { "Three" };
 
 	// Vector with the spelled-out numbers
-	const vector<string> spelledOutNumbers
+	const vector<string_view> spelledOutNumbers
 	{
 		"zero",
 		"one",
@@ -518,7 +522,7 @@ void BookExercises::Chapter3::Exercise8()
 	istringstream iss { input };
 
 	// Vector with the spelled-out numbers
-	const vector<string> spelledOutNumbers
+	const vector<string_view> spelledOutNumbers
 	{
 		"zero",
 		"one",
@@ -781,47 +785,436 @@ void BookExercises::Chapter3::Exercise11()
 
 void BookExercises::Chapter3::Exercise12()
 {
+	// Maximum prime number to generate
+	constexpr unsigned int maxPrime { 100u };
 
+	// Vector to store the prime numbers
+	vector<unsigned int> primeNumbers;
+
+	// Buffer to store the next prime number
+	unsigned int nextPrime { 0u };
+
+	// Prime id Number
+	unsigned int primeId { 2u };
+
+	// Flag to indicate if the next prime number is divisible by any of the existing prime numbers
+	bool isDivisible { false };
+
+	// Add the first two prime numbers to the vector
+	primeNumbers.push_back(2u);
+	primeNumbers.push_back(3u);
+
+	// Loop until the vector of prime numbers is filled with the maximum prime number
+	while (nextPrime <= maxPrime)
+	{
+		// Reset the isDivisible flag for the next prime number
+		isDivisible = false;
+
+		// Calculate the next possible prime number
+		nextPrime = primeId % 2u == 0u ? 6 * (++primeId >> 1u) - 1u : 6 * (primeId++ >> 1u) + 1u;
+
+		// Loop through the existing prime numbers
+		for (const auto& prime : primeNumbers)
+		{
+			// Check if the next prime number is divisible by any of the existing prime numbers
+			if (nextPrime % prime == 0u)
+			{
+				// Set the isDivisible flag to true and break out of the loop
+				isDivisible = true;
+				break;
+			}
+		}
+
+		// Add the next prime number to the vector if it is less than or equal to the maximum prime number
+		if (nextPrime <= maxPrime && !isDivisible) { primeNumbers.push_back(nextPrime); }
+	}
+
+	// Print the header for the prime numbers
+	println("Found {} prime numbers up to {}:", primeNumbers.size(), maxPrime);
+
+	// Loop through the prime numbers and print them
+	for (const auto& prime : primeNumbers)
+	{
+		println("{}", prime);
+	}
 }
 
 void BookExercises::Chapter3::Exercise13()
 {
+	// Upper limit for the prime numbers
+	constexpr unsigned int upperLimit { 100u };
 
+	// Vector to hold numbers from 2 to upperLimit
+	vector<unsigned int> numbers(upperLimit - 1u);
+
+	// Fill the vector with numbers from 2 to upperLimit
+	for (size_t i { 0u }; i < numbers.size(); ++i)
+	{
+		numbers[i] = static_cast<unsigned int>(i) + 2u;
+	}
+
+	// Loop through the numbers to find prime numbers
+	for (const auto& prime : numbers)
+	{
+		// Loop again through the numbers to check for divisibility
+		for (const auto& candidate : numbers)
+		{
+			// Skip if the divisor is lower or equal to the prime number
+			if (candidate <= prime) { continue; }
+
+			// If the candidate is divisible by the prime number, remove it from the vector
+			if (candidate % prime == 0u)
+			{
+				erase(numbers, candidate);
+			}
+		}
+	}
+
+	// Print the prime numbers found
+	println("Found {} prime numbers up to {}:", numbers.size(), upperLimit);
+
+	// Loop through the numbers and print them
+	for (const auto& prime : numbers)
+	{
+		println("{}", prime);
+	}
 }
 
 void BookExercises::Chapter3::Exercise14()
 {
+	// Simulate user input
+	constexpr size_t primeCount { 100u };
 
+	// Vector to store the prime numbers
+	vector<unsigned int> primeNumbers;
+
+	// Resize the vector to hold the specified number of prime numbers
+	primeNumbers.reserve(primeCount);
+
+	// Fill the vector with the first prime numbers
+	primeNumbers.push_back(2u);
+	primeNumbers.push_back(3u);
+
+	// Flag to indicate if the next prime number is divisible by any of the existing prime numbers
+	bool isDivisible { false };
+
+	// Variable to store the next prime number
+	unsigned int nextPrime { 0u };
+
+	// Continue filling the vector with the next prime numbers
+	for (unsigned int i { 2u }; primeNumbers.size() < primeCount; ++i)
+	{
+		// Reset the isDivisible flag for the next prime number
+		isDivisible = false;
+
+		// Calculate the next possible prime number
+		nextPrime = i % 2u == 0u ? 6 * ((i + 1u) >> 1u) - 1u : 6 * (i >> 1u) + 1u;
+
+		// Loop through the existing prime numbers
+		for (const auto& prime : primeNumbers)
+		{
+			// Check if the next prime number is divisible by any of the existing prime numbers
+			if (nextPrime % prime == 0u)
+			{
+				// Set the isDivisible flag to true and break out of the loop
+				isDivisible = true;
+				break;
+			}
+		}
+
+		// Add the next prime number to the vector if it is less than or equal to the maximum prime number
+		if (!isDivisible) { primeNumbers.push_back(nextPrime); }
+	}
+
+	// Print the header for the prime numbers
+	println("The first {} prime numbers are:", primeCount);
+
+	// Loop through the prime numbers and print them
+	for (const auto& prime : primeNumbers)
+	{
+		println("{}", prime);
+	}
 }
 
 void BookExercises::Chapter3::Exercise15()
 {
+	// Simulate user input
+	vector<int> input { 1, 2, 3, 4, 5, 3, 2, 1, 1, 3, 3 };
 
+	// Print the user input
+	println("The user input is: {}", input);
+
+	// Sort the input vector to group identical numbers together
+	sort(input.begin(), input.end());
+
+	// Variable to store the most frequently occurring number and its frequency
+	int mostFrequentNumber { input[0u] };
+	unsigned int highestFrequency { 0u };
+	unsigned int currentFrequency { 0u };
+
+	// Loop through unique values in the sorted input vector to find the most frequently occurring number
+	for (const auto& value : input)
+	{
+		// Count occurrences of the current value using std::count
+		currentFrequency = static_cast<unsigned int>(count(input.begin(), input.end(), value));
+
+		// If the current frequency is higher than the highest frequency, update the most frequent number and highest frequency
+		if (currentFrequency > highestFrequency)
+		{
+			mostFrequentNumber = value;
+			highestFrequency = currentFrequency;
+		}
+	}
+
+	// Print the most frequently occurring number and its frequency
+	println
+	(
+		"The most frequently occurring number is {} with a frequency of {}",
+		mostFrequentNumber,
+		highestFrequency
+	);
 }
 
 void BookExercises::Chapter3::Exercise16()
 {
+	// Vector to hold the strings
+	vector<string_view> strings
+	{
+		"apple",
+		"banana",
+		"cherry",
+		"date",
+		"elderberry",
+		"date",
+		"banana",
+		"banana"
+	};
 
+	// Print the original strings
+	println("Original strings: {}", strings);
+
+	// Sort the strings in ascending order
+	sort(strings.begin(), strings.end());
+
+	// Variable to store the most frequently occurring string and its frequency
+	string mostFrequentString { strings[0u] };
+	unsigned int highestFrequency { 0u };
+	unsigned int currentFrequency { 0u };
+
+	// Loop through unique values in the sorted input vector to find the most frequently occurring string
+	for (const auto& value : strings)
+	{
+		// Count occurrences of the current value using std::count
+		currentFrequency = static_cast<unsigned int>(count(strings.begin(), strings.end(), value));
+
+		// If the current frequency is higher than the highest frequency, update the most frequent string and highest frequency
+		if (currentFrequency > highestFrequency)
+		{
+			mostFrequentString = value;
+			highestFrequency = currentFrequency;
+		}
+	}
+
+	// Print the min and max strings
+	println("The minimum string is {} and the maximum string is {}", strings.front(), strings.back());
+
+	// Print the most frequently occurring string and its frequency
+	println
+	(
+		"The most frequently occurring string is {} with a frequency of {}",
+		mostFrequentString,
+		highestFrequency
+	);
 }
 
 void BookExercises::Chapter3::Exercise17()
 {
+	// Simulate user input
+	constexpr double aValue { 5.0 };
+	constexpr double bValue { 7.0 };
+	constexpr double cValue { 2.0 };
 
+	// Variables to store the solutions of the quadratic equation
+	double xValue1 { 0.0 };
+	double xValue2 { 0.0 };
+
+	// Print the user input
+	println("The user input is: a = {}, b = {}, c = {}", aValue, bValue, cValue);
+
+	// Calculate the solution using the quadratic formula
+	xValue1 = (-bValue + sqrt(bValue * bValue - 4 * aValue * cValue)) / (2 * aValue);
+	xValue2 = (-bValue - sqrt(bValue * bValue - 4 * aValue * cValue)) / (2 * aValue);
+
+	// Print the solutions
+	println("The solutions are: x1 = {}, x2 = {}", xValue1, xValue2);
 }
 
 void BookExercises::Chapter3::Exercise18()
 {
+	// Simulate user input
+	vector<string_view> names { "Alice", "Bob", "Charlie", "David", "Eve", "NoName" };
+	vector<unsigned int> scores { 85u, 92u, 78u, 90u, 88u, 0u };
 
+
+	// Print the user input
+	println("The user input is:");
+
+	// Validate that the sizes of the names and scores vectors are equal
+	if (names.size() != scores.size())
+	{
+		println("Error: The sizes of the names and scores vectors are not equal.");
+		return;
+	}
+
+	// Validate there are no duplicate names in the names vector
+	for (const auto& name : names)
+	{
+		if (count(names.begin(), names.end(), name) > 1)
+		{
+			println("Error: Duplicate name found: {}", name);
+			return;
+		}
+	}
+
+	// Loop through the names and scores and print them
+	for (unsigned int i { 0u }; i < names.size(); ++i)
+	{
+		println("Name: {}, Score: {}", names[i], scores[i]);
+	}
 }
 
 void BookExercises::Chapter3::Exercise19()
 {
+	// Simulate user input
+	vector<string_view> names { "Alice", "Bob", "Charlie", "David", "Eve", "NoName" };
+	vector<unsigned int> scores { 85u, 92u, 78u, 90u, 88u, 0u };
+	constexpr unsigned int score { 85u };
 
+
+
+	// Print the user input
+	println("The user input is:");
+
+	// Validate that the sizes of the names and scores vectors are equal
+	if (names.size() != scores.size())
+	{
+		println("Error: The sizes of the names and scores vectors are not equal.");
+		return;
+	}
+
+	// Validate there are no duplicate names in the names vector
+	for (const auto& name : names)
+	{
+		if (count(names.begin(), names.end(), name) > 1)
+		{
+			println("Error: Duplicate name found: {}", name);
+			return;
+		}
+	}
+
+	// Loop through the names and scores and print them
+	for (unsigned int i { 0u }; i < names.size(); ++i)
+	{
+		println("Name: {}, Score: {}", names[i], scores[i]);
+	}
+
+	// Print two newlines for better readability
+	println();
+	println();
+
+	// Print the simulated user input for the score to search for
+	println("The user input is: {}", score);
+
+	// Vector to store the names corresponding to the given score
+	vector<string_view> namesWithScore;
+
+	// Loop through the names and scores to find the name corresponding to the given score
+	for (size_t i { 0u }; i < scores.size(); ++i)
+	{
+		// Check if the score matches the given score
+		if (scores[i] == score)
+		{
+			// Add the corresponding name to the namesWithScore vector
+			namesWithScore.push_back(names[i]);
+		}
+	}
+
+	// Print the result of the search
+	println
+	(
+		"Found {} name{} with the score of {}: {}",
+		namesWithScore.size(),
+		namesWithScore.size() == 1 ? "" : "s",
+		score,
+		namesWithScore
+	);
 }
 
 void BookExercises::Chapter3::Exercise20()
 {
+	// Simulate user input
+	vector<string_view> names { "Alice", "Bob", "Charlie", "David", "Eve", "NoName" };
+	vector<unsigned int> scores { 85u, 92u, 78u, 90u, 88u, 0u };
+	constexpr string_view name { "Alice" };
 
+
+
+	// Print the user input
+	println("The user input is:");
+
+	// Validate that the sizes of the names and scores vectors are equal
+	if (names.size() != scores.size())
+	{
+		println("Error: The sizes of the names and scores vectors are not equal.");
+		return;
+	}
+
+	// Validate there are no duplicate names in the names vector
+	for (const auto& name : names)
+	{
+		if (count(names.begin(), names.end(), name) > 1)
+		{
+			println("Error: Duplicate name found: {}", name);
+			return;
+		}
+	}
+
+	// Loop through the names and scores and print them
+	for (unsigned int i { 0u }; i < names.size(); ++i)
+	{
+		println("Name: {}, Score: {}", names[i], scores[i]);
+	}
+
+	// Print two newlines for better readability
+	println();
+	println();
+
+	// Print the simulated user input for the name to search for
+	println("The user input is: {}", name);
+
+	// Vector to store the scores corresponding to the given name
+	vector<unsigned int> scoresWithName;
+
+	// Loop through the names and scores to find the score corresponding to the given name
+	for (size_t i { 0u }; i < names.size(); ++i)
+	{
+		// Check if the name matches the given name
+		if (names[i] == name)
+		{
+			// Add the corresponding score to the scoresWithName vector
+			scoresWithName.push_back(scores[i]);
+		}
+	}
+
+	// Print the result of the search
+	println
+	(
+		"Found {} score{} for the name {}: {}",
+		scoresWithName.size(),
+		scoresWithName.size() == 1 ? "" : "s",
+		name,
+		scoresWithName
+	);
 }
 
 void BookExercises::Chapter3::WholeChapter()
