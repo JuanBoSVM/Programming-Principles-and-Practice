@@ -24,7 +24,7 @@ using std::println;
 void BookExercises::Chapter2::TryThis1()
 {
 	// Simulate user input for the exercise
-	const string name { "Juan" };
+	string_view name { "Juan" };
 	constexpr double age { 29.5 };
 
 	// Print the user input values
@@ -353,16 +353,16 @@ void BookExercises::Chapter2::Exercise6()
 void BookExercises::Chapter2::Exercise7()
 {
 	// Values set to simulate user input for the exercise
-	const string name1 { "John Doe" };
-	const string name2 { "Jane Smith" };
-	const string name3 { "Alice Johnson" };
+	string_view name1 { "John Doe" };
+	string_view name2 { "Jane Smith" };
+	string_view name3 { "Alice Johnson" };
 
 	// Print the user input values
 	println("The user input values are: {}, {}, and {}", name1, name2, name3);
 	println();
 
 	// Introduce the names into a vector for easier processing
-	vector<string> names { name1, name2, name3 };
+	vector<string_view> names { name1, name2, name3 };
 
 	// Sort the names in alphabetical order
 	std::sort(names.begin(), names.end());
@@ -387,7 +387,7 @@ void BookExercises::Chapter2::Exercise8()
 void BookExercises::Chapter2::Exercise9()
 {
 	// Known numbers
-	vector<string> numbers
+	vector<string_view> numbers
 	{
 		"zero",
 		"one",
@@ -446,7 +446,7 @@ void BookExercises::Chapter2::Exercise9()
 void BookExercises::Chapter2::Exercise10()
 {
 	// Values set to simulate user input for the exercise
-	const string operation { "+" };
+	string_view operation { "+" };
 	constexpr double operand1 { 100.0 };
 	constexpr double operand2 { 7.0 };
 

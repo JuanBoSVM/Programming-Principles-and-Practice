@@ -29,8 +29,8 @@ using std::log2;
 void BookExercises::Chapter3::TryThis1()
 {
 	// Simulate user input
-	const string input { "150y" };
-	istringstream iss { input };
+	string_view input { "150y" };
+	istringstream iss { string(input) };
 
 	// Conversion constants
 	constexpr double dollarPerYen { 0.0073 };
@@ -67,8 +67,8 @@ void BookExercises::Chapter3::TryThis1()
 void BookExercises::Chapter3::TryThis2()
 {
 	// Simulate user input
-	const string input { "150y" };
-	istringstream iss { input };
+	string_view input { "150y" };
+	istringstream iss { string(input) };
 
 	// Conversion constants
 	constexpr double dollarPerYen { 0.0073 };
@@ -184,8 +184,8 @@ void BookExercises::Chapter3::TryThis5()
 void BookExercises::Chapter3::TryThis6()
 {
 	// Simulate user input
-	const string input { "I like broccoli but not potatoes." };
-	istringstream iss { input };
+	string_view input { "I like broccoli but not potatoes." };
+	istringstream iss { string(input) };
 
 	// Define a vector of banned words
 	const vector<string_view> bannedWords
@@ -249,7 +249,7 @@ void BookExercises::Chapter3::Exercise1()
 void BookExercises::Chapter3::Exercise2()
 {
 	// Simulate user input
-	const string input { "Programming" };
+	string_view input { "Programming" };
 
 	// Print the user input
 	println("The user input is: {}", input);
@@ -264,8 +264,8 @@ void BookExercises::Chapter3::Exercise2()
 void BookExercises::Chapter3::Exercise3()
 {
 	// Simulate user input
-	const string input { "26 27 28 29" };
-	istringstream iss { input };
+	string_view input { "26 27 28 29" };
+	istringstream iss { string(input) };
 
 	// Vector to store the temperatures
 	vector<int> temps;
@@ -313,8 +313,8 @@ void BookExercises::Chapter3::Exercise3()
 void BookExercises::Chapter3::Exercise4()
 {
 	// Simulate user input
-	const string input { "17.54 28.31 39.67 42.15" };
-	istringstream iss { input };
+	string_view input { "17.54 28.31 39.67 42.15" };
+	istringstream iss { string(input) };
 
 	// Vector to store the numbers
 	vector<double> distances;
@@ -424,8 +424,8 @@ void BookExercises::Chapter3::Exercise5()
 void BookExercises::Chapter3::Exercise6()
 {
 	// Simulate user input
-	const string input { "30.3 17.4 +" };
-	istringstream iss { input };
+	string_view input { "30.3 17.4 +" };
+	istringstream iss { string(input) };
 
 	// Variables to store the operands and operator
 	double operand1 { 0.0 };
@@ -518,8 +518,8 @@ void BookExercises::Chapter3::Exercise7()
 void BookExercises::Chapter3::Exercise8()
 {
 	// Simulate user input
-	const string input { "Three 4 +" };
-	istringstream iss { input };
+	string_view input { "Three 4 +" };
+	istringstream iss { string(input) };
 
 	// Vector with the spelled-out numbers
 	const vector<string_view> spelledOutNumbers
