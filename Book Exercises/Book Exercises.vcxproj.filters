@@ -30,6 +30,9 @@
     <ClInclude Include="BookChapters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Chapter4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chapter1.cpp">
@@ -45,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Chapter3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
