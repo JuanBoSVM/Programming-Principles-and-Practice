@@ -140,10 +140,10 @@ void BookExercises::Chapter4::Exercise2()
 	// Vector of wrong code snippets
 	vector<string_view> wrongCodeSnippets = {
 		"Int k = c + 273.25;",
-		"return Int"
+		"return Int",
 		"cin >> d;",
 		"double k = ctok(\"k\")",
-		"Cout << k << '\n';"
+		"Cout << k << '\\n';"
 	};
 
 	// Vector with the corrected code snippets
@@ -152,7 +152,7 @@ void BookExercises::Chapter4::Exercise2()
 		"return k;",
 		"cin >> c;",
 		"double k = ctok(c);",
-		"cout << k << '\n';"
+		"cout << k << '\\n';"
 	};
 
 	// Vector with the explanations for each correction
@@ -163,6 +163,14 @@ void BookExercises::Chapter4::Exercise2()
 		"Function ctok expects a double, not a string",
 		"Cout is capitalized. It should be cout"
 	};
+
+	for (size_t i { 0u }; i < wrongCodeSnippets.size(); ++i)
+	{
+		println("Wrong Code: {}", wrongCodeSnippets[i]);
+		println("Corrected Code: {}", correctedCodeSnippets[i]);
+		println("Explanation: {}", explanations[i]);
+		println();
+	}
 }
 
 void BookExercises::Chapter4::Exercise3()
