@@ -137,7 +137,32 @@ void BookExercises::Chapter4::Exercise1()
 
 void BookExercises::Chapter4::Exercise2()
 {
+	// Vector of wrong code snippets
+	vector<string_view> wrongCodeSnippets = {
+		"Int k = c + 273.25;",
+		"return Int"
+		"cin >> d;",
+		"double k = ctok(\"k\")",
+		"Cout << k << '\n';"
+	};
 
+	// Vector with the corrected code snippets
+	vector<string_view> correctedCodeSnippets = {
+		"double k = c + 273.25;",
+		"return k;",
+		"cin >> c;",
+		"double k = ctok(c);",
+		"cout << k << '\n';"
+	};
+
+	// Vector with the explanations for each correction
+	vector<string_view> explanations = {
+		"Int is capitalized. It should be of type double",
+		"Return statement should return k, not Int",
+		"Variable d is not declared. It should be c",
+		"Function ctok expects a double, not a string",
+		"Cout is capitalized. It should be cout"
+	};
 }
 
 void BookExercises::Chapter4::Exercise3()
