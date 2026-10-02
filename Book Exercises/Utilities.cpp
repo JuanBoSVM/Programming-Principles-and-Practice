@@ -55,3 +55,13 @@ void StringToLower(string& str)
 		c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
 	}
 }
+
+string StringToLower(string_view str)
+{
+	// Create a new string from the string_view and convert it to lowercase
+	string result(str);
+	StringToLower(result);
+
+	// Return the lowercase string
+	return result;
+}
