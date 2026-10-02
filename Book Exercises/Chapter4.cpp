@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <string_view>
+#include <sstream>
 
 #include "Utilities.h"
 
@@ -14,6 +15,7 @@ using std::function;
 using std::vector;
 using std::string;
 using std::string_view;
+using std::istringstream;
 
 void BookExercises::Chapter4::TryThis1()
 {
@@ -175,32 +177,167 @@ void BookExercises::Chapter4::Exercise2()
 
 void BookExercises::Chapter4::Exercise3()
 {
+	// Simulate user input
+	constexpr double celsius { -274.0 };
+	constexpr double absoluteZeroCelsius { -273.15 };
+	constexpr double kelvin { celsius + 273.15 };
 
+	// Print the user input
+	println("User Input: {}C", celsius);
+
+	// Validate the input
+	if (celsius < absoluteZeroCelsius)
+	{
+		println("Error: Temperature below absolute zero is not physically possible.");
+	}
+
+	else
+	{
+		println("Temperature in Kelvin: {} K", kelvin);
+	}
 }
 
 void BookExercises::Chapter4::Exercise4()
 {
+	// Simulate user input
+	constexpr double celsius { -274.0 };
+	constexpr double absoluteZeroCelsius { -273.15 };
+	constexpr double kelvin { celsius < absoluteZeroCelsius ? -1.0 : celsius + 273.15 };
 
+	// Print the user input
+	println("User Input: {}C", celsius);
+
+	// Print the result based on the validation
+	if (kelvin < 0)
+	{
+		println("Error: Temperature below absolute zero is not physically possible.");
+	}
+
+	else
+	{
+		println("Temperature in Kelvin: {} K", kelvin);
+	}
 }
 
 void BookExercises::Chapter4::Exercise5()
 {
+	// Simulate user input
+	constexpr double kelvin { 15.0 };
+	constexpr double celsius { kelvin - 273.15 };
 
+	// Print the user input
+	println("User Input: {}K", kelvin);
+
+	// Print the result based on the validation
+	if (kelvin < 0)
+	{
+		println("Error: Temperature below absolute zero is not physically possible.");
+	}
+
+	else
+	{
+		println("Temperature in Celsius: {}C", celsius);
+	}
 }
 
 void BookExercises::Chapter4::Exercise6()
 {
+	// Simulate user input
+	constexpr double celsius { 25.0 };
+	constexpr double fahrenheit { 60.0 };
 
+	// Print the user input
+	println("User Input: {}C and {}F", celsius, fahrenheit);
+	println();
+
+	// Convert Celsius to Fahrenheit and print the result
+	constexpr double convertedFahrenheit { (celsius * 9.0 / 5.0) + 32.0 };
+	println("Converted Fahrenheit: {}F", convertedFahrenheit);
+
+	// Convert Fahrenheit to Celsius and print the result
+	constexpr double convertedCelsius { (fahrenheit - 32.0) * 5.0 / 9.0 };
+	println("Converted Celsius: {}C", convertedCelsius);
 }
 
 void BookExercises::Chapter4::Exercise7()
 {
+	// Simulate user input
+	constexpr double a { 3.0 };
+	constexpr double b { 4.0 };
+	constexpr double c { 5.0 };
 
+	// Print the user input
+	println("User Input: a = {}, b = {}, c = {}", a, b, c);
+	println();
+
+	// Calculate the discriminant
+	constexpr double discriminant { (b * b) - (4 * a * c) };
+
+	// Print the discriminant
+	println("Discriminant: {}", discriminant);
+
+	// Validate there are real roots
+	if (discriminant < 0) { println("No real solutions!"); }
+
+	// Calculate and print the roots if they exist
+	else
+	{
+		const double root1 { (-b + std::sqrt(discriminant)) / (2 * a) };
+		const double root2 { (-b - std::sqrt(discriminant)) / (2 * a) };
+		println("Roots: {} and {}", root1, root2);
+	}
 }
 
 void BookExercises::Chapter4::Exercise8()
 {
+	// Simulate user input
+	constexpr unsigned int count { 3u };
+	string_view input { "1 2 3 4 5 |" };
+	istringstream iss { string(input) };
 
+	// Print the user input
+	println("User Input: {}", input);
+
+	// Vector to hold the numbers
+	vector<int> numbers;
+
+	// Buffer to hold each number read from the input stream
+	int num;
+
+	// Read numbers from the input stream until the '|' character is encountered
+	while (iss >> num)
+	{
+		numbers.push_back(num);
+	}
+
+	// Variable to hold the sum of the numbers
+	int sum { 0 };
+
+	// Validate that the count of numbers read matches the expected count
+	if (numbers.size() < count)
+	{
+		println("Error: Expected at least {} numbers, but got {}.", count, numbers.size());
+	}
+
+	// Calculate the sum of the numbers if the count is valid
+	else
+	{
+		// Print the count of numbers to be summed
+		print("Sum of the first {} numbers ( ", count);
+
+		// Loop through the numbers
+		for (unsigned int i { 0u }; i < count; ++i)
+		{
+			// Add the current number to the sum
+			sum += numbers[i];
+
+			// Print the current number
+			print("{} ", numbers[i]);
+		}
+
+		// Print the sum of the numbers
+		println(") = {}", sum);
+	}
 }
 
 void BookExercises::Chapter4::Exercise9()
