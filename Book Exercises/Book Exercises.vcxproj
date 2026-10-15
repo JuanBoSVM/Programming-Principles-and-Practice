@@ -152,17 +152,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BookChapters.h" />
+    <ClInclude Include="Calculator.h" />
+    <ClInclude Include="Calculator\Chapter5\Calculator.h" />
+    <ClInclude Include="Calculator\Chapter5\Token.h" />
+    <ClInclude Include="Calculator\Chapter5\TokenType.h" />
     <ClInclude Include="Chapter1.h" />
     <ClInclude Include="Chapter2.h" />
     <ClInclude Include="Chapter3.h" />
     <ClInclude Include="Chapter4.h" />
+    <ClInclude Include="Chapter5.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Calculator\Chapter5\Token.cpp" />
     <ClCompile Include="Chapter1.cpp" />
     <ClCompile Include="Chapter2.cpp" />
     <ClCompile Include="Chapter3.cpp" />
     <ClCompile Include="Chapter4.cpp" />
+    <ClCompile Include="Chapter5.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>

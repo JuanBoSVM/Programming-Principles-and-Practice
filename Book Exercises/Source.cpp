@@ -26,6 +26,7 @@ int main()
 		BookExercises::Chapter2::WholeChapter,
 		BookExercises::Chapter3::WholeChapter,
 		BookExercises::Chapter4::WholeChapter,
+		BookExercises::Chapter5::WholeChapter
 	};
 
 	// Print the header for the book exercises

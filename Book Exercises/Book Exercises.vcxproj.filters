@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Calculator">
+      <UniqueIdentifier>{a133a821-b8c8-4f98-95f6-e544f93cc22e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Calculator">
+      <UniqueIdentifier>{c782a169-d7cb-414f-bd5a-c6835864ad93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Calculator\Chapter5">
+      <UniqueIdentifier>{23dbd442-6da6-4676-a81c-bd07d411c688}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Calculator\Chapter5">
+      <UniqueIdentifier>{c158569c-e03a-4574-8e0a-d5c4aaaed1a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chapter1.h">
@@ -33,6 +45,21 @@
     <ClInclude Include="Chapter4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Chapter5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculator.h">
+      <Filter>Header Files\Calculator</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculator\Chapter5\Token.h">
+      <Filter>Header Files\Calculator\Chapter5</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculator\Chapter5\TokenType.h">
+      <Filter>Header Files\Calculator\Chapter5</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculator\Chapter5\Calculator.h">
+      <Filter>Header Files\Calculator\Chapter5</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chapter1.cpp">
@@ -52,6 +79,12 @@
     </ClCompile>
     <ClCompile Include="Chapter4.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator\Chapter5\Token.cpp">
+      <Filter>Source Files\Calculator\Chapter5</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
