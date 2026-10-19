@@ -54,10 +54,10 @@
     <ClInclude Include="Calculator\Chapter5\Token.h">
       <Filter>Header Files\Calculator\Chapter5</Filter>
     </ClInclude>
-    <ClInclude Include="Calculator\Chapter5\TokenType.h">
+    <ClInclude Include="Calculator\Chapter5\Calculator.h">
       <Filter>Header Files\Calculator\Chapter5</Filter>
     </ClInclude>
-    <ClInclude Include="Calculator\Chapter5\Calculator.h">
+    <ClInclude Include="Calculator\Chapter5\TokenStream.h">
       <Filter>Header Files\Calculator\Chapter5</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,7 +83,7 @@
     <ClCompile Include="Chapter5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Calculator\Chapter5\Token.cpp">
+    <ClCompile Include="Calculator\Chapter5\TokenStream.cpp">
       <Filter>Source Files\Calculator\Chapter5</Filter>
     </ClCompile>
   </ItemGroup>

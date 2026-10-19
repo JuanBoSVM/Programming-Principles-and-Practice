@@ -1,4 +1,4 @@
 #pragma once
 
 #include "Token.h"
-#include "TokenType.h"
+#include "TokenStream.h"
