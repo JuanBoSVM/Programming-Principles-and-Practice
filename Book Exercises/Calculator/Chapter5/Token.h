@@ -15,7 +15,8 @@ namespace Calculator::Chapter5
 			Integer,
 			FloatingPoint,
 			Operator,
-			Parenthesis,
+			StartParenthesis,
+			EndParenthesis,
 			Execute,
 			Assign,
 			End

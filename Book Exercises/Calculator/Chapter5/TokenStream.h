@@ -3,6 +3,7 @@
 #include "Token.h"
 
 #include <vector>
+#include <string_view>
 
 namespace Calculator::Chapter5
 {
@@ -12,16 +13,32 @@ namespace Calculator::Chapter5
 	{
 	public:
 
+		TokenStream() = default;
+		~TokenStream() = default;
+
+		TokenStream(std::string_view str);
+
+		TokenStream(const TokenStream&) = delete;
+		TokenStream& operator=(const TokenStream&) = delete;
+
+		TokenStream(TokenStream&&) = delete;
+		TokenStream& operator=(TokenStream&&) = delete;
+
+	public:
+
 		Token Get();
 		Token Peek() const;
 
-		void Putback(const Token& token);
+		TokenStream& Putback(const Token& token);
 		void Ignore(const Token::Type type);
 
 		void Clear();
 
 	private:
 
+		std::string_view m_RawData;
 		std::vector<Token> m_Data;
 	};
+
+	TokenStream& operator<< (TokenStream& stream, const Token& token);
 }

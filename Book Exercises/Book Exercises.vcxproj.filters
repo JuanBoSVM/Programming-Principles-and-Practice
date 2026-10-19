@@ -60,6 +60,9 @@
     <ClInclude Include="Calculator\Chapter5\TokenStream.h">
       <Filter>Header Files\Calculator\Chapter5</Filter>
     </ClInclude>
+    <ClInclude Include="Calculator\Chapter5\Lexer.h">
+      <Filter>Header Files\Calculator\Chapter5</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chapter1.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Calculator\Chapter5\TokenStream.cpp">
+      <Filter>Source Files\Calculator\Chapter5</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator\Chapter5\Lexer.cpp">
       <Filter>Source Files\Calculator\Chapter5</Filter>
     </ClCompile>
   </ItemGroup>
