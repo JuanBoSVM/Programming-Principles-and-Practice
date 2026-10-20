@@ -25,19 +25,26 @@ namespace Calculator::Chapter5
 
 		Token ParseToken(std::string_view input, size_t& pos);
 
-		Token TokenizeNumber(std::string_view number);
+		void TokenizeNumber(Token& token, std::string_view value);
 
-		Token TokenizeInteger(std::string_view number);
+		void TokenizeInteger(Token& token, std::string_view value);
 
-		Token TokenizeFloatingPoint(std::string_view number);
+		void TokenizeFloatingPoint(Token& token, std::string_view value);
 
-		Token TokenizeOperator(char op);
+		void TokenizeOperator(Token& token, char value);
 
-		Token TokenizeParenthesis(char paren);
+		void TokenizeParenthesis(Token& token, char value);
 
-		Token TokenizeAssign();
+		void TokenizeAssign(Token& token, char value);
 
-		Token TokenizeExecute();
+		void TokenizeExecute(Token& token, char value);
 
+		bool IsOperator(char c) const;
+
+		bool IsStartOfParenthesis(char c) const;
+
+		bool IsEndOfParenthesis(char c) const;
+
+		bool IsEndofToken(Token::Type type, char c) const;
 	};
 }

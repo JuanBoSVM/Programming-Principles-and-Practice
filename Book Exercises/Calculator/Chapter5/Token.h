@@ -12,6 +12,7 @@ namespace Calculator::Chapter5
 		{
 			Invalid = -1,
 			Empty,
+			Number,
 			Integer,
 			FloatingPoint,
 			Operator,
@@ -34,6 +35,9 @@ namespace Calculator::Chapter5
 		Token& operator=(Token&&) = delete;
 
 	public:
+
+		inline void SetType(Type type) { m_Type = type; }
+		inline void SetValue(std::string_view value) { m_Value = value.data(); }
 
 		inline Type GetType() const { return m_Type; }
 
