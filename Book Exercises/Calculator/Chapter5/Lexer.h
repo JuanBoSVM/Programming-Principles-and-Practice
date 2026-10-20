@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string_view>
+#include <vector>
+
 #include "Token.h"
 #include "TokenStream.h"
 
@@ -11,6 +14,8 @@ namespace Calculator::Chapter5
 		Lexer() = default;
 		~Lexer() = default;
 
+		Lexer(std::string_view str);
+
 		Lexer(const Lexer&) = delete;
 		Lexer& operator=(const Lexer&) = delete;
 
@@ -19,32 +24,28 @@ namespace Calculator::Chapter5
 
 	public:
 
-		void Tokenize(TokenStream& stream, std::string_view input);
+		void GetTokens(TokenStream& stream);
+		void GetTokens(TokenStream& stream, std::string_view str);
+
+		inline const std::vector<Token>& GetTokens() const { return m_Tokens; }
 
 	private:
 
-		Token ParseToken(std::string_view input, size_t& pos);
+		void AssignInput(std::string_view str);
 
-		void TokenizeNumber(Token& token, std::string_view value);
+		void CleanInput();
 
-		void TokenizeInteger(Token& token, std::string_view value);
+		void Tokenize();
 
-		void TokenizeFloatingPoint(Token& token, std::string_view value);
+		Token ParseToken(size_t& pos) const;
 
-		void TokenizeOperator(Token& token, char value);
-
-		void TokenizeParenthesis(Token& token, char value);
-
-		void TokenizeAssign(Token& token, char value);
-
-		void TokenizeExecute(Token& token, char value);
-
-		bool IsOperator(char c) const;
-
-		bool IsStartOfParenthesis(char c) const;
-
-		bool IsEndOfParenthesis(char c) const;
+		size_t FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const;
 
 		bool IsEndofToken(Token::Type type, char c) const;
+
+	private:
+
+		std::string m_Input;
+		std::vector<Token> m_Tokens;
 	};
 }

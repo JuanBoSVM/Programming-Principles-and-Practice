@@ -28,13 +28,9 @@ namespace Calculator::Chapter5
 		Token() = default;
 		~Token() = default;
 
-		Token(const Token&) = delete;
-		Token& operator=(const Token&) = delete;
-
-		Token(Token&&) = delete;
-		Token& operator=(Token&&) = delete;
-
 	public:
+
+		void SetTypeFromChar(char c);
 
 		inline void SetType(Type type) { m_Type = type; }
 		inline void SetValue(std::string_view value) { m_Value = value.data(); }
@@ -48,7 +44,7 @@ namespace Calculator::Chapter5
 
 	private:
 
-		Type m_Type { Type::Empty };
+		Type m_Type{ Type::Empty };
 
 		std::string m_Value;
 	};

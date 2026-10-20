@@ -41,4 +41,5 @@ namespace Calculator::Chapter5
 	};
 
 	TokenStream& operator<< (TokenStream& stream, const Token& token);
+	TokenStream& operator<< (TokenStream& stream, const std::vector<Token>& tokens);
 }

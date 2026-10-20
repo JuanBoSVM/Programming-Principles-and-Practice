@@ -92,5 +92,8 @@
     <ClCompile Include="Calculator\Chapter5\Lexer.cpp">
       <Filter>Source Files\Calculator\Chapter5</Filter>
     </ClCompile>
+    <ClCompile Include="Calculator\Chapter5\Token.cpp">
+      <Filter>Source Files\Calculator\Chapter5</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

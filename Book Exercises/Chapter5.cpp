@@ -37,7 +37,12 @@ void BookExercises::Chapter5::Exercise1()
 
 void BookExercises::Chapter5::Exercise2()
 {
+	string_view input{ "{(4+5)*6} / (3+4)" };
 
+	Calculator::Chapter5::Lexer lexer{ input };
+	Calculator::Chapter5::TokenStream stream;
+
+	lexer.GetTokens(stream);
 }
 
 void BookExercises::Chapter5::Exercise3()

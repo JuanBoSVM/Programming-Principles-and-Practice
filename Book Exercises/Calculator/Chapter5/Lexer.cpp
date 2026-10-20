@@ -3,67 +3,87 @@
 #include <string>
 
 
-void Calculator::Chapter5::Lexer::Tokenize(TokenStream& stream, std::string_view input)
+Calculator::Chapter5::Lexer::Lexer(std::string_view str)
+	: m_Input(str)
 {
+	CleanInput();
+}
 
-	for (size_t i{ 0u }; i < input.length(); ++i)
+void Calculator::Chapter5::Lexer::GetTokens(TokenStream& stream)
+{
+	m_Tokens.clear();
+	m_Tokens.reserve(m_Input.length());
+
+	Tokenize();
+
+	stream << m_Tokens;
+}
+
+void Calculator::Chapter5::Lexer::GetTokens(TokenStream& stream, std::string_view str)
+{
+	AssignInput(str);
+
+	GetTokens(stream);
+}
+
+void Calculator::Chapter5::Lexer::AssignInput(std::string_view str)
+{
+	m_Input = str;
+	CleanInput();
+}
+
+void Calculator::Chapter5::Lexer::CleanInput()
+{
+	m_Input.erase(std::remove_if(m_Input.begin(), m_Input.end(), [](char c) { return std::isspace(c); }), m_Input.end());
+}
+
+void Calculator::Chapter5::Lexer::Tokenize()
+{
+	for (size_t i{ 0u }; i < m_Input.length(); ++i)
 	{
-		stream << ParseToken(input, i);
+		m_Tokens.emplace_back(ParseToken(i));
 	}
 }
 
-Calculator::Chapter5::Token Calculator::Chapter5::Lexer::ParseToken(std::string_view input, size_t& pos)
+Calculator::Chapter5::Token Calculator::Chapter5::Lexer::ParseToken(size_t& pos) const
 {
-	using std::string;
 	using enum Token::Type;
 
 	Token tokenBuffer;
 	size_t tokenStartPosition{ pos };
-	size_t tokenEndPosition{ pos };
+	size_t tokenEndPosition{ 0ULL };
 
-	if (char startChar{ input[pos] }; isdigit(startChar)) { tokenBuffer.SetType(Number); }
-	else if (IsOperator(startChar)) { tokenBuffer.SetType(Operator); }
-	else if (IsStartOfParenthesis(startChar)) { tokenBuffer.SetType(StartParenthesis); }
-	else if (IsEndOfParenthesis(startChar)) { tokenBuffer.SetType(EndParenthesis); }
-	else if (startChar == '=') { tokenBuffer.SetType(Assign); }
-	else if (startChar == ';') { tokenBuffer.SetType(Execute); }
+	tokenBuffer.SetTypeFromChar(m_Input[pos]);
 
-	for (size_t i{ 0u }; i < input.length(); ++i)
+	tokenEndPosition = FindTokenEndPosition(pos, tokenBuffer);
+
+	std::string tokenValue{ m_Input.substr(tokenStartPosition, tokenEndPosition - tokenStartPosition + 1) };
+
+	if (tokenBuffer.GetType() == Number)
 	{
-		if (IsEndofToken(tokenBuffer.GetType(), input[i]))
+		if (tokenValue.contains('.')) { tokenBuffer.SetType(FloatingPoint); }
+		else { tokenBuffer.SetType(Integer); }
+	}
+
+	tokenBuffer.SetValue(tokenValue);
+
+	return tokenBuffer;
+}
+
+size_t Calculator::Chapter5::Lexer::FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const
+{
+	constexpr size_t errorPosition{ 0ULL };
+
+	for (size_t i{ pos + 1 }; i < m_Input.length(); ++i)
+	{
+		if (IsEndofToken(tokenBuffer.GetType(), m_Input[i]))
 		{
-			tokenEndPosition = i;
-			break;
+			pos = i - 1;
+			return i - 1;
 		}
 	}
 
-	switch (tokenBuffer.GetType())
-	{
-	case Token::Type::Invalid:
-		break;
-	case Token::Type::Empty:
-		break;
-	case Token::Type::Number:
-		break;
-	case Token::Type::Integer:
-		break;
-	case Token::Type::FloatingPoint:
-		break;
-	case Token::Type::Operator:
-		break;
-	case Token::Type::StartParenthesis:
-		break;
-	case Token::Type::EndParenthesis:
-		break;
-	case Token::Type::Execute:
-		break;
-	case Token::Type::Assign:
-		break;
-	case Token::Type::End:
-		break;
-	default:
-		break;
-	}
+	return errorPosition;
 }
 
 bool Calculator::Chapter5::Lexer::IsEndofToken(Token::Type type, char c) const
@@ -76,6 +96,7 @@ bool Calculator::Chapter5::Lexer::IsEndofToken(Token::Type type, char c) const
 	case Integer:
 		return !isdigit(c) && c != ',';
 
+	case Number:
 	case FloatingPoint:
 		return !isdigit(c) && c != '.' && c != ',';
 
@@ -97,54 +118,4 @@ bool Calculator::Chapter5::Lexer::IsEndofToken(Token::Type type, char c) const
 	default:
 		return true;
 	}
-}
-
-void Calculator::Chapter5::Lexer::TokenizeNumber(Token& token, std::string_view value)
-{
-
-}
-
-void Calculator::Chapter5::Lexer::TokenizeInteger(Token& token, std::string_view value)
-{
-
-}
-
-void Calculator::Chapter5::Lexer::TokenizeFloatingPoint(Token& token, std::string_view value)
-{
-
-}
-
-void Calculator::Chapter5::Lexer::TokenizeOperator(Token& token, char value)
-{
-
-}
-
-void Calculator::Chapter5::Lexer::TokenizeParenthesis(Token& token, char value)
-{
-
-}
-
-void Calculator::Chapter5::Lexer::TokenizeAssign(Token& token, char value)
-{
-
-}
-
-void Calculator::Chapter5::Lexer::TokenizeExecute(Token& token, char value)
-{
-
-}
-
-bool Calculator::Chapter5::Lexer::IsOperator(char c) const
-{
-	return std::string("+-*/!^").contains(c);
-}
-
-bool Calculator::Chapter5::Lexer::IsStartOfParenthesis(char c) const
-{
-	return std::string("({[").contains(c);
-}
-
-bool Calculator::Chapter5::Lexer::IsEndOfParenthesis(char c) const
-{
-	return std::string(")}]").contains(c);
 }

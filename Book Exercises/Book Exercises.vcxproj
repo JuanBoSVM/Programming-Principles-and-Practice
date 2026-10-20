@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Calculator\Chapter5\Lexer.cpp" />
+    <ClCompile Include="Calculator\Chapter5\Token.cpp" />
     <ClCompile Include="Calculator\Chapter5\TokenStream.cpp" />
     <ClCompile Include="Chapter1.cpp" />
     <ClCompile Include="Chapter2.cpp" />
