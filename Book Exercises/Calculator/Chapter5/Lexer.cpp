@@ -39,10 +39,20 @@ void Calculator::Chapter5::Lexer::CleanInput()
 
 void Calculator::Chapter5::Lexer::Tokenize()
 {
+	using enum Token::Type;
+
+	if (m_Input.empty())
+	{
+		m_Tokens.emplace_back(End, "");
+		return;
+	}
+
 	for (size_t i{ 0u }; i < m_Input.length(); ++i)
 	{
 		m_Tokens.emplace_back(ParseToken(i));
 	}
+
+	if (m_Tokens.back().GetType() != Execute) { m_Tokens.emplace_back(End, ""); }
 }
 
 Calculator::Chapter5::Token Calculator::Chapter5::Lexer::ParseToken(size_t& pos) const
