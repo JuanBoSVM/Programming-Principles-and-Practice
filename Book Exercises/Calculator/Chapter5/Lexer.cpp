@@ -70,16 +70,16 @@ Calculator::Chapter5::Token Calculator::Chapter5::Lexer::ParseToken(size_t& pos)
 	return tokenBuffer;
 }
 
-size_t Calculator::Chapter5::Lexer::FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const
+int Calculator::Chapter5::Lexer::FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const
 {
-	constexpr size_t errorPosition{ 0ULL };
+	constexpr int errorPosition{ -1 };
 
-	for (size_t i{ pos + 1 }; i < m_Input.length(); ++i)
+	for (size_t i{ pos + 1ULL }; i < m_Input.length(); ++i)
 	{
 		if (IsEndofToken(tokenBuffer.GetType(), m_Input[i]))
 		{
-			pos = i - 1;
-			return i - 1;
+			pos = i - 1ULL;
+			return static_cast<int>(i - 1ULL);
 		}
 	}
 
@@ -100,21 +100,16 @@ bool Calculator::Chapter5::Lexer::IsEndofToken(Token::Type type, char c) const
 	case FloatingPoint:
 		return !isdigit(c) && c != '.' && c != ',';
 
-	case Operator:
-		return string("+-*/!^").contains(c);
-
+	case Addition:
+	case Subtraction:
+	case Multiplication:
+	case Division:
+	case Exponentiation:
+	case Factorial:
 	case StartParenthesis:
-		return string("({[").contains(c);
-
 	case EndParenthesis:
-		return string(")}]").contains(c);
-
 	case Assign:
-		return c != '=';
-
 	case Execute:
-		return c != ';';
-
 	default:
 		return true;
 	}

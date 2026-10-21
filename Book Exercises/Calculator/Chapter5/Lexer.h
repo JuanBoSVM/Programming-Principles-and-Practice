@@ -39,7 +39,7 @@ namespace Calculator::Chapter5
 
 		Token ParseToken(size_t& pos) const;
 
-		size_t FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const;
+		int FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const;
 
 		bool IsEndofToken(Token::Type type, char c) const;
 

@@ -15,7 +15,12 @@ namespace Calculator::Chapter5
 			Number,
 			Integer,
 			FloatingPoint,
-			Operator,
+			Addition,
+			Subtraction,
+			Multiplication,
+			Division,
+			Exponentiation,
+			Factorial,
 			StartParenthesis,
 			EndParenthesis,
 			Execute,
@@ -37,8 +42,7 @@ namespace Calculator::Chapter5
 
 		inline Type GetType() const { return m_Type; }
 
-		inline char GetOperatorValue() const { return m_Value[0]; }
-		inline char GetParenthesisValue() const { return m_Value[0]; }
+		inline char GetCharacterValue() const { return m_Value[0]; }
 		inline long GetIntegerValue() const { return stol(m_Value); }
 		inline double GetFloatingPointValue() const { return stod(m_Value); }
 
