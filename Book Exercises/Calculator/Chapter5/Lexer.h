@@ -6,7 +6,7 @@
 #include "Token.h"
 #include "TokenStream.h"
 
-namespace Calculator::Chapter5
+namespace Program::Chapter5
 {
 	class Lexer
 	{

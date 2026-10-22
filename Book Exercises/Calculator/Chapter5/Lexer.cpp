@@ -3,13 +3,13 @@
 #include <string>
 
 
-Calculator::Chapter5::Lexer::Lexer(std::string_view str)
+Program::Chapter5::Lexer::Lexer(std::string_view str)
 	: m_Input(str)
 {
 	CleanInput();
 }
 
-void Calculator::Chapter5::Lexer::GetTokens(TokenStream& stream)
+void Program::Chapter5::Lexer::GetTokens(TokenStream& stream)
 {
 	m_Tokens.clear();
 	m_Tokens.reserve(m_Input.length());
@@ -19,25 +19,25 @@ void Calculator::Chapter5::Lexer::GetTokens(TokenStream& stream)
 	stream << m_Tokens;
 }
 
-void Calculator::Chapter5::Lexer::GetTokens(TokenStream& stream, std::string_view str)
+void Program::Chapter5::Lexer::GetTokens(TokenStream& stream, std::string_view str)
 {
 	AssignInput(str);
 
 	GetTokens(stream);
 }
 
-void Calculator::Chapter5::Lexer::AssignInput(std::string_view str)
+void Program::Chapter5::Lexer::AssignInput(std::string_view str)
 {
 	m_Input = str;
 	CleanInput();
 }
 
-void Calculator::Chapter5::Lexer::CleanInput()
+void Program::Chapter5::Lexer::CleanInput()
 {
 	m_Input.erase(std::remove_if(m_Input.begin(), m_Input.end(), [](char c) { return std::isspace(c); }), m_Input.end());
 }
 
-void Calculator::Chapter5::Lexer::Tokenize()
+void Program::Chapter5::Lexer::Tokenize()
 {
 	using enum Token::Type;
 
@@ -55,7 +55,7 @@ void Calculator::Chapter5::Lexer::Tokenize()
 	if (m_Tokens.back().GetType() != Execute) { m_Tokens.emplace_back(End, ""); }
 }
 
-Calculator::Chapter5::Token Calculator::Chapter5::Lexer::ParseToken(size_t& pos) const
+Program::Chapter5::Token Program::Chapter5::Lexer::ParseToken(size_t& pos) const
 {
 	using enum Token::Type;
 
@@ -69,18 +69,12 @@ Calculator::Chapter5::Token Calculator::Chapter5::Lexer::ParseToken(size_t& pos)
 
 	std::string tokenValue{ m_Input.substr(tokenStartPosition, tokenEndPosition - tokenStartPosition + 1) };
 
-	if (tokenBuffer.GetType() == Number)
-	{
-		if (tokenValue.contains('.')) { tokenBuffer.SetType(FloatingPoint); }
-		else { tokenBuffer.SetType(Integer); }
-	}
-
 	tokenBuffer.SetValue(tokenValue);
 
 	return tokenBuffer;
 }
 
-int Calculator::Chapter5::Lexer::FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const
+int Program::Chapter5::Lexer::FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const
 {
 	constexpr int errorPosition{ -1 };
 
@@ -96,31 +90,11 @@ int Calculator::Chapter5::Lexer::FindTokenEndPosition(size_t& pos, const Token& 
 	return errorPosition;
 }
 
-bool Calculator::Chapter5::Lexer::IsEndofToken(Token::Type type, char c) const
+bool Program::Chapter5::Lexer::IsEndofToken(Token::Type type, char c) const
 {
 	using enum Token::Type;
-	using std::string;
 
-	switch (type)
-	{
-	case Integer:
-		return !isdigit(c) && c != ',';
+	if (type == Number) { return !isdigit(c) && c != '.' && c != ','; }
 
-	case Number:
-	case FloatingPoint:
-		return !isdigit(c) && c != '.' && c != ',';
-
-	case Addition:
-	case Subtraction:
-	case Multiplication:
-	case Division:
-	case Exponentiation:
-	case Factorial:
-	case StartParenthesis:
-	case EndParenthesis:
-	case Assign:
-	case Execute:
-	default:
-		return true;
-	}
+	return true;
 }

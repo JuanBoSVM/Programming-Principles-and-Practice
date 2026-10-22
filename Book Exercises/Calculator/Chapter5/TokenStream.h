@@ -5,9 +5,9 @@
 #include <vector>
 #include <string_view>
 
-namespace Calculator::Chapter5
+namespace Program::Chapter5
 {
-	using Calculator::Chapter5::Token;
+	using Program::Chapter5::Token;
 
 	class TokenStream
 	{

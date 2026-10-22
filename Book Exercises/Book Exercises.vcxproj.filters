@@ -48,9 +48,6 @@
     <ClInclude Include="Chapter5.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Calculator.h">
-      <Filter>Header Files\Calculator</Filter>
-    </ClInclude>
     <ClInclude Include="Calculator\Chapter5\Token.h">
       <Filter>Header Files\Calculator\Chapter5</Filter>
     </ClInclude>
@@ -93,6 +90,9 @@
       <Filter>Source Files\Calculator\Chapter5</Filter>
     </ClCompile>
     <ClCompile Include="Calculator\Chapter5\Token.cpp">
+      <Filter>Source Files\Calculator\Chapter5</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator\Chapter5\Calculator.cpp">
       <Filter>Source Files\Calculator\Chapter5</Filter>
     </ClCompile>
   </ItemGroup>

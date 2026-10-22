@@ -1,6 +1,6 @@
 #include "Chapter5.h"
 
-#include "Calculator.h"
+#include "Calculator/Chapter5/Calculator.h"
 #include "Utilities.h"
 
 #include <print>
@@ -40,13 +40,14 @@ void BookExercises::Chapter5::Exercise2()
 	// Simulate user input
 	string_view input{ "{(40-34)*6} / (2.5+3.5)" };
 
-	Calculator::Chapter5::Lexer lexer{ input };
-	Calculator::Chapter5::TokenStream stream;
+	// Create a calculator object
+	Program::Chapter5::Calculator calculator;
 
 	// Print user input
 	println("User input: {}", input);
 
-	lexer.GetTokens(stream);
+	// Print the result
+	println("The result is {}", calculator.Calculate(input));
 }
 
 void BookExercises::Chapter5::Exercise3()

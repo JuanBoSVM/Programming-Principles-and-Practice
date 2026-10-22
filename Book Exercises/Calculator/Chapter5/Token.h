@@ -2,7 +2,7 @@
 
 #include<string>
 
-namespace Calculator::Chapter5
+namespace Program::Chapter5
 {
 	class Token
 	{
@@ -13,8 +13,6 @@ namespace Calculator::Chapter5
 			Invalid = -1,
 			Empty,
 			Number,
-			Integer,
-			FloatingPoint,
 			Addition,
 			Subtraction,
 			Multiplication,
@@ -22,7 +20,11 @@ namespace Calculator::Chapter5
 			Exponentiation,
 			Factorial,
 			StartParenthesis,
+			StartCurlyBrace,
+			StartSquareBracket,
 			EndParenthesis,
+			EndCurlyBrace,
+			EndSquareBracket,
 			Execute,
 			Assign,
 			End
@@ -32,6 +34,8 @@ namespace Calculator::Chapter5
 
 		Token() = default;
 		~Token() = default;
+
+		Token(Type type, std::string_view value);
 
 	public:
 
@@ -43,7 +47,6 @@ namespace Calculator::Chapter5
 		inline Type GetType() const { return m_Type; }
 
 		inline char GetCharacterValue() const { return m_Value[0]; }
-		inline long GetIntegerValue() const { return stol(m_Value); }
 		inline double GetFloatingPointValue() const { return stod(m_Value); }
 
 	private:
@@ -52,4 +55,6 @@ namespace Calculator::Chapter5
 
 		std::string m_Value;
 	};
+
+	bool ParenthesisMatch(const Token& left, const Token& right);
 }
