@@ -8,19 +8,19 @@
 
 namespace Program::Chapter5
 {
-	class Lexer
+	class Parser
 	{
 	public:
-		Lexer() = default;
-		~Lexer() = default;
+		Parser() = default;
+		~Parser() = default;
 
-		Lexer(std::string_view str);
+		Parser(std::string_view str);
 
-		Lexer(const Lexer&) = delete;
-		Lexer& operator=(const Lexer&) = delete;
+		Parser(const Parser&) = delete;
+		Parser& operator=(const Parser&) = delete;
 
-		Lexer(Lexer&&) = delete;
-		Lexer& operator=(Lexer&&) = delete;
+		Parser(Parser&&) = delete;
+		Parser& operator=(Parser&&) = delete;
 
 	public:
 

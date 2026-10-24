@@ -1,5 +1,9 @@
 #include "Token.h"
 
+Program::Chapter5::Token::Token(Type type)
+	: m_Type(type)
+{}
+
 Program::Chapter5::Token::Token(Type type, std::string_view value)
 	: m_Type(type), m_Value(value)
 {}

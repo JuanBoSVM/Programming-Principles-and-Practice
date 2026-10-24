@@ -35,6 +35,7 @@ namespace Program::Chapter5
 		Token() = default;
 		~Token() = default;
 
+		Token(Type type);
 		Token(Type type, std::string_view value);
 
 	public:
