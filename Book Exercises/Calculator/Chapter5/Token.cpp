@@ -30,9 +30,48 @@ void Program::Chapter5::Token::SetTypeFromChar(char c)
 	else { m_Type = Invalid; }
 }
 
-bool Program::Chapter5::ParenthesisMatch(const Token& left, const Token& right)
+bool Program::Chapter5::Token::IsStartParenthesis() const
 {
-	return (left.GetType() == Token::Type::StartParenthesis && right.GetType() == Token::Type::EndParenthesis) ||
-		(left.GetType() == Token::Type::StartCurlyBrace && right.GetType() == Token::Type::EndCurlyBrace) ||
-		(left.GetType() == Token::Type::StartSquareBracket && right.GetType() == Token::Type::EndSquareBracket);
+	switch (m_Type)
+	{
+	case Type::StartParenthesis:
+	case Type::StartCurlyBrace:
+	case Type::StartSquareBracket:
+		return true;
+
+	default:
+		return false;
+	}
+}
+
+bool Program::Chapter5::Token::IsEndParenthesis() const
+{
+	switch (m_Type)
+	{
+	case Type::EndParenthesis:
+	case Type::EndCurlyBrace:
+	case Type::EndSquareBracket:
+		return true;
+
+	default:
+		return false;
+	}
+}
+
+bool Program::Chapter5::Token::ParenthesisMatch(const Token& other) const
+{
+	switch (m_Type)
+	{
+	case Type::StartParenthesis:
+		return other.m_Type == Type::EndParenthesis;
+
+	case Type::StartCurlyBrace:
+		return other.m_Type == Type::EndCurlyBrace;
+
+	case Type::StartSquareBracket:
+		return other.m_Type == Type::EndSquareBracket;
+
+	default:
+		return false;
+	}
 }

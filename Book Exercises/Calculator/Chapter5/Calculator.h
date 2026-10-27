@@ -4,7 +4,7 @@
 
 #include "Token.h"
 #include "TokenStream.h"
-#include "Parser.h"
+#include "Lexer.h"
 
 namespace Program::Chapter5
 {
@@ -24,6 +24,14 @@ namespace Program::Chapter5
 	public:
 
 		double Calculate(std::string_view str);
+		double Calculate(TokenStream& stream);
+
+	private:
+
+		double Calculate();
+		double CalculateTerm();
+		double CalculatePower();
+		double CalculatePrimary();
 
 	private:
 

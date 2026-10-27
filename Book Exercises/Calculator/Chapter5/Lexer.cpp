@@ -1,15 +1,15 @@
-#include "Parser.h"
+#include "Lexer.h"
 
 #include <string>
 
 
-Program::Chapter5::Parser::Parser(std::string_view str)
+Program::Chapter5::Lexer::Lexer(std::string_view str)
 	: m_Input(str)
 {
 	CleanInput();
 }
 
-void Program::Chapter5::Parser::GetTokens(TokenStream& stream)
+void Program::Chapter5::Lexer::GetTokens(TokenStream& stream)
 {
 	m_Tokens.clear();
 	m_Tokens.reserve(m_Input.length());
@@ -19,25 +19,25 @@ void Program::Chapter5::Parser::GetTokens(TokenStream& stream)
 	stream << m_Tokens;
 }
 
-void Program::Chapter5::Parser::GetTokens(TokenStream& stream, std::string_view str)
+void Program::Chapter5::Lexer::GetTokens(TokenStream& stream, std::string_view str)
 {
 	AssignInput(str);
 
 	GetTokens(stream);
 }
 
-void Program::Chapter5::Parser::AssignInput(std::string_view str)
+void Program::Chapter5::Lexer::AssignInput(std::string_view str)
 {
 	m_Input = str;
 	CleanInput();
 }
 
-void Program::Chapter5::Parser::CleanInput()
+void Program::Chapter5::Lexer::CleanInput()
 {
 	m_Input.erase(std::remove_if(m_Input.begin(), m_Input.end(), [](char c) { return std::isspace(c); }), m_Input.end());
 }
 
-void Program::Chapter5::Parser::Tokenize()
+void Program::Chapter5::Lexer::Tokenize()
 {
 	using enum Token::Type;
 
@@ -55,7 +55,7 @@ void Program::Chapter5::Parser::Tokenize()
 	if (m_Tokens.back().GetType() != Execute) { m_Tokens.emplace_back(End, ""); }
 }
 
-Program::Chapter5::Token Program::Chapter5::Parser::ParseToken(size_t& pos) const
+Program::Chapter5::Token Program::Chapter5::Lexer::ParseToken(size_t& pos) const
 {
 	using enum Token::Type;
 
@@ -74,7 +74,7 @@ Program::Chapter5::Token Program::Chapter5::Parser::ParseToken(size_t& pos) cons
 	return tokenBuffer;
 }
 
-int Program::Chapter5::Parser::FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const
+int Program::Chapter5::Lexer::FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const
 {
 	constexpr int errorPosition{ -1 };
 
@@ -90,7 +90,7 @@ int Program::Chapter5::Parser::FindTokenEndPosition(size_t& pos, const Token& to
 	return errorPosition;
 }
 
-bool Program::Chapter5::Parser::IsEndofToken(Token::Type type, char c) const
+bool Program::Chapter5::Lexer::IsEndofToken(Token::Type type, char c) const
 {
 	using enum Token::Type;
 

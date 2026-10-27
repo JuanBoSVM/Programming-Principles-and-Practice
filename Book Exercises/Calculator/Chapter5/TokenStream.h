@@ -18,11 +18,11 @@ namespace Program::Chapter5
 
 		TokenStream(std::string_view str);
 
-		TokenStream(const TokenStream&) = delete;
-		TokenStream& operator=(const TokenStream&) = delete;
+		TokenStream(const TokenStream&) = default;
+		TokenStream& operator=(const TokenStream&) = default;
 
-		TokenStream(TokenStream&&) = delete;
-		TokenStream& operator=(TokenStream&&) = delete;
+		TokenStream(TokenStream&&) = default;
+		TokenStream& operator=(TokenStream&&) = default;
 
 	public:
 
@@ -30,16 +30,16 @@ namespace Program::Chapter5
 		Token Peek() const;
 
 		TokenStream& Putback(const Token& token);
-		void Ignore(const Token::Type type);
+		void Ignore();
 
 		void Clear();
+
+		TokenStream& operator<< (const Token& token);
+		TokenStream& operator<< (const std::vector<Token>& tokens);
 
 	private:
 
 		std::string_view m_RawData;
 		std::vector<Token> m_Data;
 	};
-
-	TokenStream& operator<< (TokenStream& stream, const Token& token);
-	TokenStream& operator<< (TokenStream& stream, const std::vector<Token>& tokens);
 }

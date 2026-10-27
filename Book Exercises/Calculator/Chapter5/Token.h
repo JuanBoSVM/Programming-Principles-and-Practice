@@ -35,6 +35,14 @@ namespace Program::Chapter5
 		Token() = default;
 		~Token() = default;
 
+		inline operator double() const { return GetFloatingPointValue(); }
+
+		Token(const Token&) = default;
+		Token& operator=(const Token&) = default;
+
+		Token(Token&&) = default;
+		Token& operator=(Token&&) = default;
+
 		Token(Type type);
 		Token(Type type, std::string_view value);
 
@@ -47,6 +55,10 @@ namespace Program::Chapter5
 
 		inline Type GetType() const { return m_Type; }
 
+		bool IsStartParenthesis() const;
+		bool IsEndParenthesis() const;
+		bool ParenthesisMatch(const Token& other) const;
+
 		inline char GetCharacterValue() const { return m_Value[0]; }
 		inline double GetFloatingPointValue() const { return stod(m_Value); }
 
@@ -56,6 +68,4 @@ namespace Program::Chapter5
 
 		std::string m_Value;
 	};
-
-	bool ParenthesisMatch(const Token& left, const Token& right);
 }

@@ -1,10 +1,10 @@
 #include "TokenStream.h"
-#include "Parser.h"
+#include "Lexer.h"
 
 Program::Chapter5::TokenStream::TokenStream(std::string_view str)
 	: m_RawData(str)
 {
-	Parser lexer{ m_RawData };
+	Lexer lexer{ m_RawData };
 	lexer.GetTokens(*this, str);
 }
 
@@ -32,7 +32,7 @@ Program::Chapter5::TokenStream& Program::Chapter5::TokenStream::Putback(const To
 	return *this;
 }
 
-void Program::Chapter5::TokenStream::Ignore(const Token::Type type)
+void Program::Chapter5::TokenStream::Ignore()
 {
 	if (m_Data.empty()) { return; }
 
@@ -44,17 +44,14 @@ void Program::Chapter5::TokenStream::Clear()
 	m_Data.clear();
 }
 
-Program::Chapter5::TokenStream& Program::Chapter5::operator<<(TokenStream& stream, const Token& token)
+Program::Chapter5::TokenStream& Program::Chapter5::TokenStream::operator<<(const Token& token)
 {
-	return stream.Putback(token);
+	return Putback(token);
 }
 
-Program::Chapter5::TokenStream& Program::Chapter5::operator<<(TokenStream& stream, const std::vector<Token>& tokens)
+Program::Chapter5::TokenStream& Program::Chapter5::TokenStream::operator<<(const std::vector<Token>& tokens)
 {
-	for (const auto& token : tokens)
-	{
-		stream << token;
-	}
+	m_Data = tokens;
 
-	return stream;
+	return *this;
 }

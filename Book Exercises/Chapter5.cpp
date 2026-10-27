@@ -4,6 +4,7 @@
 #include "Utilities.h"
 
 #include <print>
+#include <exception>
 
 using std::print;
 using std::println;
@@ -38,7 +39,7 @@ void BookExercises::Chapter5::Exercise1()
 void BookExercises::Chapter5::Exercise2()
 {
 	// Simulate user input
-	string_view input{ "{(40-34)*6} / (2.5+3.5)" };
+	string_view input{ "{(-74+40*+2)*6} / [57+-3.5*3!]" };
 
 	// Create a calculator object
 	Program::Chapter5::Calculator calculator;
@@ -46,8 +47,19 @@ void BookExercises::Chapter5::Exercise2()
 	// Print user input
 	println("User input: {}", input);
 
-	// Print the result
-	println("The result is {}", calculator.Calculate(input));
+	try
+	{
+		// Calculate the result
+		double result = calculator.Calculate(input);
+
+		// Print the result
+		println("The result is {}", result);
+	}
+
+	catch (const std::exception& e)
+	{
+		println("Error: {}", e.what());
+	}
 }
 
 void BookExercises::Chapter5::Exercise3()
