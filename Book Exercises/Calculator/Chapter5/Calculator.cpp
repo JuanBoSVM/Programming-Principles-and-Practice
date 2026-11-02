@@ -78,7 +78,7 @@ double Program::Chapter5::Calculator::CalculatePower()
 		{
 		case Factorial:
 			m_TokenStream.Get();
-			leftValue = std::tgamma(leftValue + 1.0);
+			leftValue = std::tgamma(static_cast<unsigned int>(leftValue + 1.0));
 			break;
 
 		case Exponentiation:

@@ -39,7 +39,7 @@ void BookExercises::Chapter5::Exercise1()
 void BookExercises::Chapter5::Exercise2()
 {
 	// Simulate user input
-	string_view input{ "{(-74+40*+2)*6} / [57+-3.5*3!]" };
+	string_view input{ "(4 + 5)∗6 } / (3 + 4)" };
 
 	// Create a calculator object
 	Program::Chapter5::Calculator calculator;
@@ -64,12 +64,106 @@ void BookExercises::Chapter5::Exercise2()
 
 void BookExercises::Chapter5::Exercise3()
 {
+	// Simulate user input
+	string_view input{ "{(-74+40*+2)*6} / [57+-3.5*3!]" };
 
+	// Create a calculator object
+	Program::Chapter5::Calculator calculator;
+
+	// Print user input
+	println("User input: {}", input);
+
+	try
+	{
+		// Calculate the result
+		double result = calculator.Calculate(input);
+
+		// Print the result
+		println("The result is {}", result);
+	}
+
+	catch (const std::exception& e)
+	{
+		println("Error: {}", e.what());
+	}
 }
 
 void BookExercises::Chapter5::Exercise4()
 {
+	// Define a structure to hold the name and score
+	struct Name_Value
+	{
+		string_view name;
+		unsigned int score;
+	};
 
+	// Simulate user input
+	vector<Name_Value> nameValues{
+		{ "Alice", 85u },
+		{ "Bob", 92u },
+		{ "Charlie", 78u },
+		{ "David", 90u },
+		{ "Eve", 88u },
+		{ "NoName", 0u }
+	};
+
+	string_view name{ "Bob" };
+
+	// Print the user input
+	println("The user input is:");
+
+	// Validate there are no duplicate names in the names vector
+	for (size_t i{ 0u }; i < nameValues.size(); ++i)
+	{
+		// Store the current name
+		string_view currentName{ nameValues[i].name };
+
+		// Loop through the remaining names to check for duplicates
+		for (size_t j{ i + 1u }; j < nameValues.size(); ++j)
+		{
+			if (currentName == nameValues[j].name)
+			{
+				println("Duplicate name found: " + std::string(currentName));
+			}
+		}
+	}
+
+	// Loop through the nameValues vector and print the names and scores
+	for (const auto& nv : nameValues)
+	{
+		println("Name: {}, Score: {}", nv.name, nv.score);
+	}
+
+	// Print two newlines for better readability
+	println();
+	println();
+
+	// Print the simulated user input for the name to search for
+	println("The user input is: {}", name);
+
+	// Vector to store the scores corresponding to the given name
+	vector<unsigned int> scoresWithName;
+
+	// Loop through the names and scores to find the score corresponding to the given name
+	for (size_t i{ 0u }; i < nameValues.size(); ++i)
+	{
+		// Check if the name matches the given name
+		if (nameValues[i].name == name)
+		{
+			// Add the corresponding score to the scoresWithName vector
+			scoresWithName.push_back(nameValues[i].score);
+		}
+	}
+
+	// Print the result of the search
+	println
+	(
+		"Found {} score{} for the name {}: {}",
+		scoresWithName.size(),
+		scoresWithName.size() == 1 ? "" : "s",
+		name,
+		scoresWithName
+	);
 }
 
 void BookExercises::Chapter5::Exercise5()
@@ -79,7 +173,60 @@ void BookExercises::Chapter5::Exercise5()
 
 void BookExercises::Chapter5::Exercise6()
 {
+	// Correct answer for the game "Bulls and Cows" with 4 digits
+	vector numbers{ 'a', 'b', 'c', 'd' };
 
+	// Simulate user input for the guess
+	vector guess{ 'a', 'b', 'd', 'c' };
+
+	// Flag to indicate if the user's still guessing
+	bool isStillGuessing{ true };
+
+	// Variables to count bulls and cows
+	unsigned int bulls{ 0u };
+	unsigned int cows{ 0u };
+
+	// Loop until the user guesses correctly
+	while (isStillGuessing)
+	{
+		// Print the user's guess
+		println("User Guess: {}", guess);
+
+		// Calculate bulls and cows
+		for (size_t i{ 0u }; i < numbers.size(); ++i)
+		{
+			// Correct digit in the correct position (bull)
+			if (guess[i] == numbers[i]) { ++bulls; }
+
+			// Correct digit in the wrong position (cow)
+			else if (find(numbers.begin(), numbers.end(), guess[i]) != numbers.end()) { ++cows; }
+		}
+
+		// Print the result of the guess
+		println("Guess: {} | Bulls: {}, Cows: {}", guess, bulls, cows);
+
+		// Check if the user guessed correctly
+		if (bulls == static_cast<int>(numbers.size()))
+		{
+			// User guessed correctly, exit the loop
+			println("Congratulations! You've guessed the correct number!");
+			isStillGuessing = false;
+		}
+
+		// Reset bulls and cows for the next guess
+		bulls = 0;
+		cows = 0;
+		guess.clear();
+
+		// Simulate the next guess
+		guess.push_back('a');
+		guess.push_back('b');
+		guess.push_back('c');
+		guess.push_back('d');
+
+		// Print a blank line for better readability between guesses
+		println();
+	}
 }
 
 void BookExercises::Chapter5::Exercise7()
