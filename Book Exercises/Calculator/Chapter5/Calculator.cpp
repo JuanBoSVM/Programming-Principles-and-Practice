@@ -17,6 +17,26 @@ double Program::Chapter5::Calculator::Calculate(TokenStream& stream)
 	return Calculate();
 }
 
+unsigned int Program::Chapter5::Calculator::CalculatePermutation(unsigned int n, unsigned int r) const
+{
+	if (n < r)
+	{
+		throw std::invalid_argument("n must be greater than or equal to r for permutation calculation");
+	}
+
+	return CalculateFactorial(n) / CalculateFactorial(n - r);
+}
+
+unsigned int Program::Chapter5::Calculator::CalculateCombination(unsigned int n, unsigned int r) const
+{
+	if (n < r)
+	{
+		throw std::invalid_argument("n must be greater than or equal to r for combination calculation");
+	}
+
+	return CalculatePermutation(n, r) / CalculateFactorial(r);
+}
+
 double Program::Chapter5::Calculator::Calculate()
 {
 	using enum Token::Type;
@@ -78,7 +98,7 @@ double Program::Chapter5::Calculator::CalculatePower()
 		{
 		case Factorial:
 			m_TokenStream.Get();
-			leftValue = std::tgamma(static_cast<unsigned int>(leftValue + 1.0));
+			leftValue = CalculateFactorial(leftValue);
 			break;
 
 		case Exponentiation:
@@ -126,4 +146,14 @@ double Program::Chapter5::Calculator::CalculatePrimary()
 	}
 
 	throw std::runtime_error("Invalid token");
+}
+
+unsigned int Program::Chapter5::Calculator::CalculateFactorial(unsigned int n) const
+{
+	return static_cast<unsigned int>(std::tgamma(n + 1U));
+}
+
+double Program::Chapter5::Calculator::CalculateFactorial(double n) const
+{
+	return std::tgamma(n + 1.0);
 }

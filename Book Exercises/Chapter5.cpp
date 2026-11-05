@@ -39,7 +39,7 @@ void BookExercises::Chapter5::Exercise1()
 void BookExercises::Chapter5::Exercise2()
 {
 	// Simulate user input
-	string_view input{ "(4 + 5)∗6 } / (3 + 4)" };
+	string_view input{ "(4 + 5)*6 / (3 + 4)" };
 
 	// Create a calculator object
 	Program::Chapter5::Calculator calculator;
@@ -123,7 +123,7 @@ void BookExercises::Chapter5::Exercise4()
 		{
 			if (currentName == nameValues[j].name)
 			{
-				println("Duplicate name found: " + std::string(currentName));
+				println("Duplicate name found: {}", std::string(currentName));
 			}
 		}
 	}
@@ -231,12 +231,99 @@ void BookExercises::Chapter5::Exercise6()
 
 void BookExercises::Chapter5::Exercise7()
 {
+	// Simulate user input
+	string_view input{ "3693" };
 
+	// Variable to store the decimal placement of the number
+	int decimalPlacement{ static_cast<int>(input.length()) };
+
+	// Print the user input
+	println("User input: {}", input);
+
+	// Print the first part of the result
+	print("{} is ", input);
+
+	// Loop through the input string
+	for (unsigned int i{ 0u }; i < input.length(); ++i)
+	{
+		// Print the number as an int
+		print("{} ", static_cast<int>(input[i]) - static_cast<int>('0'));
+
+		switch (decimalPlacement--)
+		{
+		case 4:
+			print("thousand");
+			break;
+
+		case 3:
+			print("hundred");
+			break;
+
+		case 2:
+			print("ten");
+			break;
+
+		case 1:
+			print("one");
+			break;
+
+		default:
+			break;
+		}
+
+		// Add the 's' for plural if necessary and a space after each number
+		print("{} ", static_cast<int>(input[i]) - static_cast<int>('0') == 1 ? "" : "s");
+	}
+
+	println();
+	println();
 }
 
 void BookExercises::Chapter5::Exercise8()
 {
+	// Simulate user input for the permutation of the input string
+	unsigned int permA{ 3 };
+	unsigned int permB{ 2 };
 
+	// Simulate user input for the combination of the input string
+	unsigned int combA{ 5 };
+	unsigned int combB{ 2 };
+
+	// Print the user input for the permutation
+	println("User input for permutation: {}, {}", permA, permB);
+	println();
+
+	// Print the user input for the combination
+	println("User input for combination: {}, {}", combA, combB);
+	println();
+
+	// Print a blank line for better readability
+	println();
+
+	// Create a calculator object
+	Program::Chapter5::Calculator calculator;
+
+	try
+	{
+		// Calculate the permutation
+		unsigned int permutation{ calculator.CalculatePermutation(permA, permB) };
+
+		// Calculate the combination
+		unsigned int combination{ calculator.CalculateCombination(combA, combB) };
+
+		// Print the result of the permutation
+		println("The permutation of {} and {} is {}", permA, permB, permutation);
+		println();
+
+		// Print the result of the combination
+		println("The combination of {} and {} is {}", combA, combB, combination);
+		println();
+	}
+
+	catch (const std::exception& e)
+	{
+		println("Error: {}", e.what());
+	}
 }
 
 void BookExercises::Chapter5::WholeChapter()
