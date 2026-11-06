@@ -174,7 +174,7 @@ void BookExercises::Chapter5::Exercise5()
 	calculator.SetMode(Bitwise);
 
 	// Simulate user input for bitwise calculations
-	string_view input{ "1|6^7&4" }; // Expected output: 3
+	string_view input{ "~(1|6^7&!4)" };
 
 	// Print the user input
 	println("Bitwise calculator input: {}", input);

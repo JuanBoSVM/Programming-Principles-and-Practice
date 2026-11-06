@@ -220,7 +220,7 @@ double Program::Chapter5::Calculator::CalculateBitwiseUnary()
 	if (type == LogicalNot)
 	{
 		m_TokenStream.Get();
-		return GetBitwiseOperand(CalculateBitwiseUnary()) == 0 ? 1.0 : 0.0;
+		return static_cast<double>(~GetBitwiseOperand(CalculateBitwiseUnary()));
 	}
 
 	if (type == Factorial)
@@ -231,7 +231,7 @@ double Program::Chapter5::Calculator::CalculateBitwiseUnary()
 	if (type == Complement)
 	{
 		m_TokenStream.Get();
-		return static_cast<double>(~GetBitwiseOperand(CalculateBitwiseUnary()));
+		return static_cast<double>(~GetBitwiseOperand(CalculateBitwiseUnary())) + 1.0;
 	}
 
 	return CalculateBitwisePrimary();
