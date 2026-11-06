@@ -1,7 +1,7 @@
 #include "Lexer.h"
 
+#include <cctype>
 #include <string>
-
 
 Program::Chapter5::Lexer::Lexer(std::string_view str)
 	: m_Input(str)
@@ -57,44 +57,43 @@ void Program::Chapter5::Lexer::Tokenize()
 
 Program::Chapter5::Token Program::Chapter5::Lexer::ParseToken(size_t& pos) const
 {
-	using enum Token::Type;
-
 	Token tokenBuffer;
-	size_t tokenStartPosition{ pos };
-	size_t tokenEndPosition{ 0ULL };
+	const size_t tokenStartPosition{ pos };
 
-	tokenBuffer.SetTypeFromChar(m_Input[pos]);
-
-	tokenEndPosition = FindTokenEndPosition(pos, tokenBuffer);
-
-	std::string tokenValue{ m_Input.substr(tokenStartPosition, tokenEndPosition - tokenStartPosition + 1) };
-
-	tokenBuffer.SetValue(tokenValue);
+	tokenBuffer.SetTypeFromChar(m_Input[tokenStartPosition]);
+	const int tokenEndPosition{ FindTokenEndPosition(pos, tokenBuffer) };
+	tokenBuffer.SetValue(m_Input.substr(tokenStartPosition, static_cast<size_t>(tokenEndPosition) - tokenStartPosition + 1ULL));
 
 	return tokenBuffer;
 }
 
 int Program::Chapter5::Lexer::FindTokenEndPosition(size_t& pos, const Token& tokenBuffer) const
 {
-	constexpr int errorPosition{ -1 };
+	const bool isNumber{ std::isdigit(static_cast<unsigned char>(m_Input[pos])) != 0 };
+
+	if (!isNumber)
+	{
+		return static_cast<int>(pos);
+	}
 
 	for (size_t i{ pos + 1ULL }; i < m_Input.length(); ++i)
 	{
 		if (IsEndofToken(tokenBuffer.GetType(), m_Input[i]))
 		{
 			pos = i - 1ULL;
-			return static_cast<int>(i - 1ULL);
+			return static_cast<int>(pos);
 		}
 	}
 
-	return errorPosition;
+	pos = m_Input.length() - 1ULL;
+	return static_cast<int>(pos);
 }
 
 bool Program::Chapter5::Lexer::IsEndofToken(Token::Type type, char c) const
 {
 	using enum Token::Type;
 
-	if (type == Number) { return !isdigit(c) && c != '.' && c != ','; }
+	if (type == Number) { return !std::isdigit(static_cast<unsigned char>(c)) && c != '.' && c != ','; }
 
 	return true;
 }

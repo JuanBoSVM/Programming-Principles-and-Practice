@@ -60,6 +60,9 @@
     <ClInclude Include="Calculator\Chapter5\Lexer.h">
       <Filter>Header Files\Calculator\Chapter5</Filter>
     </ClInclude>
+    <ClInclude Include="Calculator\Chapter5\CalculationMode.h">
+      <Filter>Header Files\Calculator\Chapter5</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chapter1.cpp">

@@ -19,6 +19,9 @@ void Program::Chapter5::Token::SetTypeFromChar(char c)
 	else if (c == '/') { m_Type = Division; }
 	else if (c == '^') { m_Type = Exponentiation; }
 	else if (c == '!') { m_Type = Factorial; }
+	else if (c == '&') { m_Type = BitwiseAnd; }
+	else if (c == '|') { m_Type = BitwiseOr; }
+	else if (c == '~') { m_Type = Complement; }
 	else if (c == '(') { m_Type = StartParenthesis; }
 	else if (c == '{') { m_Type = StartCurlyBrace; }
 	else if (c == '[') { m_Type = StartSquareBracket; }

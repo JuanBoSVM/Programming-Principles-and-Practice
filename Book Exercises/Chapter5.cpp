@@ -168,7 +168,26 @@ void BookExercises::Chapter5::Exercise4()
 
 void BookExercises::Chapter5::Exercise5()
 {
+	using enum Program::Chapter5::CalculationMode;
 
+	Program::Chapter5::Calculator calculator;
+	calculator.SetMode(Bitwise);
+
+	// Simulate user input for bitwise calculations
+	string_view input{ "1|6^7&4" }; // Expected output: 3
+
+	// Print the user input
+	println("Bitwise calculator input: {}", input);
+
+	try
+	{
+		println("{} = {}", input, calculator.Calculate(input));
+	}
+
+	catch (const std::exception& e)
+	{
+		println("Error evaluating {}: {}", input, e.what());
+	}
 }
 
 void BookExercises::Chapter5::Exercise6()

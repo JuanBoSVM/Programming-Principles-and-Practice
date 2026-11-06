@@ -1,6 +1,7 @@
 #include "Calculator.h"
 
 #include <cmath>
+#include <limits>
 #include <stdexcept>
 
 double Program::Chapter5::Calculator::Calculate(std::string_view str)
@@ -38,6 +39,17 @@ unsigned int Program::Chapter5::Calculator::CalculateCombination(unsigned int n,
 }
 
 double Program::Chapter5::Calculator::Calculate()
+{
+	if (m_Mode == CalculationMode::Bitwise)
+	{
+		ConvertFactorialsToLogicalNot();
+		return CalculateBitwiseExpression();
+	}
+
+	return CalculateDecimalExpression();
+}
+
+double Program::Chapter5::Calculator::CalculateDecimalExpression()
 {
 	using enum Token::Type;
 
@@ -92,11 +104,12 @@ double Program::Chapter5::Calculator::CalculatePower()
 
 	double leftValue{ CalculatePrimary() };
 
-	while (m_TokenStream.Peek().GetType() == Factorial || m_TokenStream.Peek().GetType() == Exponentiation)
+	while (m_TokenStream.Peek().GetType() == Factorial || m_TokenStream.Peek().GetType() == LogicalNot || m_TokenStream.Peek().GetType() == Exponentiation)
 	{
 		switch (m_TokenStream.Peek().GetType())
 		{
 		case Factorial:
+		case LogicalNot:
 			m_TokenStream.Get();
 			leftValue = CalculateFactorial(leftValue);
 			break;
@@ -129,7 +142,7 @@ double Program::Chapter5::Calculator::CalculatePrimary()
 
 	if (token.IsStartParenthesis())
 	{
-		const double value{ Calculate() };
+		const double value{ CalculateDecimalExpression() };
 		const Token closingToken{ m_TokenStream.Get() };
 
 		if (!token.ParenthesisMatch(closingToken))
@@ -146,6 +159,155 @@ double Program::Chapter5::Calculator::CalculatePrimary()
 	}
 
 	throw std::runtime_error("Invalid token");
+}
+
+double Program::Chapter5::Calculator::CalculateBitwiseExpression()
+{
+	return CalculateBitwiseOr();
+}
+
+double Program::Chapter5::Calculator::CalculateBitwiseOr()
+{
+	using enum Token::Type;
+
+	long long leftValue{ GetBitwiseOperand(CalculateBitwiseXor()) };
+
+	while (m_TokenStream.Peek().GetType() == BitwiseOr)
+	{
+		m_TokenStream.Get();
+		leftValue |= GetBitwiseOperand(CalculateBitwiseXor());
+	}
+
+	return static_cast<double>(leftValue);
+}
+
+double Program::Chapter5::Calculator::CalculateBitwiseXor()
+{
+	using enum Token::Type;
+
+	long long leftValue{ GetBitwiseOperand(CalculateBitwiseAnd()) };
+
+	while (m_TokenStream.Peek().GetType() == Exponentiation)
+	{
+		m_TokenStream.Get();
+		leftValue ^= GetBitwiseOperand(CalculateBitwiseAnd());
+	}
+
+	return static_cast<double>(leftValue);
+}
+
+double Program::Chapter5::Calculator::CalculateBitwiseAnd()
+{
+	using enum Token::Type;
+
+	long long leftValue{ GetBitwiseOperand(CalculateBitwiseUnary()) };
+
+	while (m_TokenStream.Peek().GetType() == BitwiseAnd)
+	{
+		m_TokenStream.Get();
+		leftValue &= GetBitwiseOperand(CalculateBitwiseUnary());
+	}
+
+	return static_cast<double>(leftValue);
+}
+
+double Program::Chapter5::Calculator::CalculateBitwiseUnary()
+{
+	using enum Token::Type;
+
+	const Token::Type type{ m_TokenStream.Peek().GetType() };
+
+	if (type == LogicalNot)
+	{
+		m_TokenStream.Get();
+		return GetBitwiseOperand(CalculateBitwiseUnary()) == 0 ? 1.0 : 0.0;
+	}
+
+	if (type == Factorial)
+	{
+		throw std::runtime_error("Bitwise logical-not token was not normalized");
+	}
+
+	if (type == Complement)
+	{
+		m_TokenStream.Get();
+		return static_cast<double>(~GetBitwiseOperand(CalculateBitwiseUnary()));
+	}
+
+	return CalculateBitwisePrimary();
+}
+
+double Program::Chapter5::Calculator::CalculateBitwisePrimary()
+{
+	using enum Token::Type;
+
+	const Token token{ m_TokenStream.Get() };
+
+	if (token.GetType() == Number)
+	{
+		return static_cast<double>(GetBitwiseOperand(token.GetFloatingPointValue()));
+	}
+
+	if (token.IsStartParenthesis())
+	{
+		const double value{ CalculateBitwiseExpression() };
+		const Token closingToken{ m_TokenStream.Get() };
+
+		if (!token.ParenthesisMatch(closingToken))
+		{
+			throw std::runtime_error("Mismatched parenthesis");
+		}
+
+		return value;
+	}
+
+	if (token.IsEndParenthesis())
+	{
+		throw std::runtime_error("Unexpected closing parenthesis");
+	}
+
+	throw std::runtime_error("Invalid bitwise token");
+}
+
+void Program::Chapter5::Calculator::ConvertFactorialsToLogicalNot()
+{
+	using enum Token::Type;
+
+	std::vector<Token> tokens;
+	Token token;
+
+	while ((token = m_TokenStream.Get()).GetType() != Invalid)
+	{
+		if (token.GetType() == Factorial)
+		{
+			token.SetType(LogicalNot);
+		}
+
+		tokens.push_back(token);
+
+		if (token.GetType() == End)
+		{
+			break;
+		}
+	}
+
+	for (auto tokenIterator{ tokens.rbegin() }; tokenIterator != tokens.rend(); ++tokenIterator)
+	{
+		m_TokenStream.Putback(*tokenIterator);
+	}
+}
+
+long long Program::Chapter5::Calculator::GetBitwiseOperand(double value) const
+{
+	using enum Token::Type;
+
+	// Check if the value is an integer
+	if (std::trunc(value) != value)
+	{
+		throw std::invalid_argument("Bitwise operands must be integer values");
+	}
+
+	return static_cast<long long>(value);
 }
 
 unsigned int Program::Chapter5::Calculator::CalculateFactorial(unsigned int n) const
